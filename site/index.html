@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <script>/* Backend API base. Leave empty when the Worker also serves this page. On another host (e.g. Netlify) set to the Worker URL, no trailing slash. */window.ARK_API="https://noahs-ark-retruns.fastbitcoin12.workers.dev";</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>NOAH'S ARK RETRUNS</title>
+<title>NOAH'S ARK RETURNS</title>
 <meta name="description" content="Live storm, flood and rainfall command center: NWS alerts, WPC Excessive Rainfall Outlook, rainfall in inches hour by hour until Sunday.">
 <meta name="theme-color" content="#050816">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9B%88%EF%B8%8F%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee&family=Outfit:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee&family=Outfit:wght@400;500;600;700;800&display=swap"></noscript>
 <style>
 :root{
   --ink:#050816; --deep:#0a1230; --storm:#17224d; --storm2:#222f6b;
@@ -47,7 +47,6 @@ h1 .a{display:block;font-size:clamp(30px,9vw,62px);background:linear-gradient(18
 h1 .b{display:inline-block;margin-top:6px;font-size:clamp(34px,11.5vw,78px);padding:2px 14px 4px;transform:rotate(-2.5deg);color:#fff;background:linear-gradient(90deg,#ff3d6e,#ff8a2a);border-radius:10px;text-shadow:3px 3px 0 #5b0020,0 0 18px rgba(255,255,255,.5);box-shadow:0 6px 0 #5b0020,0 0 40px rgba(255,61,110,.55);animation:shake 7s infinite}
 @keyframes shake{0%,92%,100%{transform:rotate(-2.5deg)}94%{transform:rotate(-1deg) translateX(3px)}96%{transform:rotate(-4deg) translateX(-3px)}98%{transform:rotate(-2deg)}}
 .tag{margin:14px 0 0;font-weight:700;letter-spacing:.22em;font-size:clamp(10px,2.8vw,13px);color:var(--rain);text-transform:uppercase}
-.rainbow{height:5px;border-radius:5px;margin:12px auto 0;max-width:420px;background:linear-gradient(90deg,#ff3d6e,#ff9f1c,#ffe14a,#3dffb0,#35e0ff,#8a7bff)}
 
 /* STATUS BANNER */
 .banner{margin:16px 0 12px;border-radius:20px;padding:16px 16px 14px;border:1px solid var(--line);background:var(--card);backdrop-filter:blur(10px);position:relative;overflow:hidden}
@@ -148,41 +147,42 @@ details.al .t{font-weight:800;font-size:16px}.details-body{padding:0 14px 14px;f
 .links{display:grid;gap:10px}@media(min-width:600px){.links{grid-template-columns:1fr 1fr}}
 .links .btn{justify-content:space-between}
 
-/* CHAT (twitch-style) */
-#chat{position:fixed;right:10px;bottom:calc(74px + env(safe-area-inset-bottom));z-index:45;width:min(340px,calc(100vw - 20px));font-family:var(--body)}
+/* CHAT (square, sticky) */
+#chat{position:fixed;right:10px;bottom:calc(80px + env(safe-area-inset-bottom));z-index:45;font-family:var(--body)}
 #chatBtn{margin-left:auto;display:flex;align-items:center;gap:8px;border:0;border-radius:99px;background:#9146ff;color:#fff;font:800 14px var(--body);padding:11px 16px;cursor:pointer;box-shadow:0 6px 24px rgba(145,70,255,.55);min-height:46px}
 #chatBtn .dot{width:8px;height:8px;border-radius:50%;background:#3dffb0}
 #chatBtn .bd{background:#ff3d6e;border-radius:99px;padding:1px 7px;font-size:12px}
-#chatPanel{display:none;flex-direction:column;height:min(56vh,430px);background:#18181b;border:1px solid #2f2f35;border-radius:12px;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,.6)}
+#chatPanel{display:none;flex-direction:column;width:min(300px,calc(100vw - 20px));aspect-ratio:1/1;background:#18181b;border:1px solid #2f2f35;border-radius:12px;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,.6)}
 #chat.open #chatPanel{display:flex}#chat.open #chatBtn{display:none}
-#chatHd{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-bottom:1px solid #2f2f35;font:800 12px var(--body);letter-spacing:.12em;color:#efeff1;text-transform:uppercase}
-#chatHd button{border:0;background:transparent;color:#adadb8;font-size:18px;cursor:pointer;min-width:36px;min-height:32px}
-#chatHd small{color:#3dffb0;font-weight:700;letter-spacing:.04em;text-transform:none}
-#chatMsgs{flex:1;overflow-y:auto;padding:8px 10px;font-size:13px;line-height:1.45;color:#efeff1;overscroll-behavior:contain}
-#chatMsgs div{padding:2px 0;word-break:break-word}#chatMsgs b{font-weight:800}#chatMsgs .sys{color:#adadb8;font-style:italic}
-#chatForm{display:flex;gap:6px;padding:8px;border-top:1px solid #2f2f35;flex-wrap:wrap}
-#chatForm input{flex:1;min-width:0;background:#0e0e10;border:1px solid #3a3a40;border-radius:8px;color:#efeff1;font:14px var(--body);padding:10px;min-height:42px}
-#chatForm button{border:0;border-radius:8px;background:#9146ff;color:#fff;font:800 13px var(--body);padding:0 14px;min-height:42px;cursor:pointer}
-#chatEm{display:flex;gap:4px;width:100%}#chatEm span{cursor:pointer;font-size:18px;padding:2px 5px;border-radius:6px;background:#26262c}
-#chatNm{width:100%;display:none}
-/* KITTEN */
-.kit{transform-box:fill-box;transform-origin:50% 100%;animation:scare 6s infinite}
-@keyframes scare{0%,84%{transform:none}87%{transform:translateY(2px) scale(1.07,.88)}90%{transform:translateY(-34px) rotate(-8deg) scale(.95,1.14)}94%{transform:translateY(-3px) scale(1.06,.94)}97%{transform:none}100%{transform:none}}
-.head{transform-box:fill-box;transform-origin:50% 90%;animation:tilt 3.4s ease-in-out infinite}
-@keyframes tilt{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(7deg)}}
-.tail{transform-box:fill-box;transform-origin:0% 100%;animation:swish 1.5s ease-in-out infinite}
-@keyframes swish{0%,100%{transform:rotate(-14deg)}50%{transform:rotate(16deg)}}
-.tailp{animation:puff 6s infinite}
-@keyframes puff{0%,86%{stroke-width:13}90%,95%{stroke-width:25}100%{stroke-width:13}}
-.paw{transform-box:fill-box;transform-origin:50% 0%;animation:swat 1.7s ease-in-out infinite}
-@keyframes swat{0%,55%,100%{transform:rotate(0)}65%{transform:rotate(-40deg) translateY(-3px)}75%{transform:rotate(8deg)}85%{transform:rotate(-34deg) translateY(-3px)}}
-.eyes{transform-box:fill-box;transform-origin:50% 50%;animation:blink 4.2s infinite}
-@keyframes blink{0%,94%,100%{transform:scaleY(1)}96%{transform:scaleY(.08)}}
-.eye{transform-box:fill-box;transform-origin:50% 50%;animation:wide 6s infinite}
-@keyframes wide{0%,86%{transform:none}90%,95%{transform:scale(1.35)}100%{transform:none}}
-.bub{transform-box:fill-box;transform-origin:15% 100%;opacity:0;animation:pop 6s infinite}
-@keyframes pop{0%,88%{opacity:0;transform:scale(.2)}91%{opacity:1;transform:scale(1.15)}93%,97%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(.2)}}
-.vid-on .kit,.vid-on .head,.vid-on .tail,.vid-on .tailp,.vid-on .paw,.vid-on .eyes,.vid-on .eye,.vid-on .bub{animation:none}
+#chatHd{display:flex;align-items:center;justify-content:space-between;gap:6px;padding:6px 10px;border-bottom:1px solid #2f2f35;font:800 11px var(--body);letter-spacing:.1em;color:#efeff1;text-transform:uppercase;flex:none}
+#chatHd button{border:0;background:transparent;color:#adadb8;font-size:18px;cursor:pointer;min-width:34px;min-height:30px}
+#chatHd small{color:#3dffb0;font-weight:700;letter-spacing:.02em;text-transform:none;flex:1;text-align:right}
+#chatMsgs{flex:1;min-height:0;overflow-y:auto;padding:6px 10px;font-size:13px;line-height:1.4;color:#efeff1;overscroll-behavior:contain}
+#chatMsgs .sys{color:#adadb8;font-style:italic;padding:2px 0;word-break:break-word}
+#chatMsgs .m{padding:4px 0;cursor:pointer;word-break:break-word}#chatMsgs .m b{font-weight:800}
+#chatMsgs .q{font-size:11px;color:#adadb8;border-left:2px solid #9146ff;padding-left:6px;margin:0 0 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#chatMsgs .rx{display:flex;flex-wrap:wrap;gap:3px}#chatMsgs .rx:not(:empty){margin-top:3px}
+#chatMsgs .rx span{background:#26262c;border-radius:99px;padding:1px 8px;font-size:12px;cursor:pointer;border:1px solid transparent}
+#chatMsgs .rx span.me{border-color:#9146ff;background:#2d2150}
+#chatMsgs .act{display:flex;flex-wrap:wrap;gap:2px;margin-top:4px;padding:4px;background:#26262c;border-radius:12px}
+#chatMsgs .act button{border:0;background:transparent;color:#efeff1;font-size:18px;cursor:pointer;min-width:34px;min-height:34px;border-radius:8px}
+#chatMsgs .act button.t{font:700 12px var(--body);color:#c9b8ff;padding:0 8px}
+#chatReply{display:none;align-items:center;gap:6px;width:100%;font-size:12px;color:#adadb8;background:#26262c;border-left:3px solid #9146ff;border-radius:6px;padding:3px 8px}
+#chatReply.on{display:flex}#chatReply span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#chatReply button{background:transparent;border:0;color:#adadb8;cursor:pointer;font-size:16px;padding:0 4px}
+@media(min-width:900px){body.chatdock .wrap{margin-right:330px;margin-left:auto;max-width:min(980px,calc(100vw - 350px))}}
+#hourly,#maps{content-visibility:auto;contain-intrinsic-size:auto 560px}
+/* COLLAPSIBLE *//* COLLAPSIBLE */
+details.coll>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:14px;background:var(--card);border:1px solid var(--line);border-radius:18px;min-height:56px;backdrop-filter:blur(8px)}
+details.coll>summary::-webkit-details-marker{display:none}
+details.coll>summary h3{margin:0;flex:1;font-family:var(--disp);font-weight:400;font-size:clamp(18px,5vw,24px);color:var(--gold);text-shadow:0 2px 0 #3b1c00}
+details.coll>summary .meta2{font-size:12px;color:var(--muted)}
+details.coll>summary .chev{transition:transform .2s;color:var(--gold);font-size:20px}
+details.coll[open]>summary{border-radius:18px 18px 0 0}details.coll[open]>summary .chev{transform:rotate(180deg)}
+details.coll .inner{border:1px solid var(--line);border-top:0;border-radius:0 0 18px 18px;padding:12px;background:var(--card)}
+nav.bar5 a{position:relative}nav.bar5 a.dot:after{content:"";position:absolute;top:4px;right:calc(50% - 20px);width:9px;height:9px;border-radius:50%;background:var(--alert);box-shadow:0 0 8px var(--alert)}
+.nb .off.news{background:#ffd98a}.nb .off.social{background:#c9b8ff}
+.nb .new{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.08em;padding:2px 7px;border-radius:99px;background:var(--alert);color:#fff;margin-right:6px}
+.nb.breaking{border-color:rgba(255,61,110,.55);box-shadow:0 0 22px rgba(255,61,110,.18)}
 /* NEIGHBOR */
 .blinds{position:relative;height:46px;border-radius:12px 12px 0 0;background:repeating-linear-gradient(180deg,#d9c9a3 0 6px,#a8946a 6px 8px);display:flex;gap:10px;align-items:center;justify-content:center;overflow:hidden}
 .blinds .eye2{width:26px;height:26px;border-radius:50%;background:#fff;border:2px solid #222;position:relative;overflow:hidden}
@@ -205,6 +205,9 @@ nav.bar5 a{flex:1 0 auto;min-width:58px;max-width:none}
 .tv iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#000}
 .tv .play{position:absolute;inset:0;width:100%;border:0;background:transparent;color:#fff;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;font:700 15px var(--body)}
 .tv .play .tri{width:78px;height:78px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#ff8a2a);color:#2a1300;display:flex;align-items:center;justify-content:center;font-size:34px;padding-left:6px;box-shadow:0 0 0 8px rgba(255,194,61,.18),0 10px 30px rgba(0,0,0,.5)}
+.tv .unmute{position:absolute;right:10px;top:10px;z-index:5;border:0;border-radius:99px;background:linear-gradient(135deg,var(--gold),#ff8a2a);color:#2a1300;font:800 14px var(--body);padding:10px 16px;min-height:44px;cursor:pointer;box-shadow:0 6px 22px rgba(0,0,0,.55);white-space:nowrap;animation:umpulse 1.6s ease-in-out infinite}
+@keyframes umpulse{50%{transform:scale(1.06)}}
+@media(prefers-reduced-motion:reduce){.tv .unmute{animation:none}}
 .tv .live{position:absolute;top:10px;left:10px;background:var(--alert);color:#fff;font:800 11px var(--body);letter-spacing:.12em;padding:4px 9px;border-radius:99px}
 .tv .live:before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#fff;margin-right:6px;animation:glow 1s infinite alternate}
 .vid-on #rain{display:none}
@@ -222,13 +225,79 @@ nav.bar5 a span{display:block;font-size:20px;line-height:1.2}
 nav.bar5 a.act{color:var(--gold);background:rgba(255,194,61,.1)}
 a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}#rain{display:none}}
+
+/* ZIP + COMMUNITY */
+main section{scroll-margin-top:12px}
+.inp{background:#0e1430;border:1px solid var(--line);border-radius:10px;color:var(--txt);font:inherit;padding:10px 12px;min-height:44px;min-width:0;max-width:100%}
+textarea.inp{width:100%;resize:vertical}
+select.inp{flex:1;min-width:150px}
+#zipIn{flex:1;min-width:140px;font-size:18px;letter-spacing:.12em}
+.zhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:12px 0 8px;padding:10px 12px;border-radius:12px;border:1px solid var(--c);background:rgba(255,255,255,.04)}
+.zhead .zv{font:800 13px var(--body);letter-spacing:.1em;color:#1a1200;background:var(--c);padding:4px 10px;border-radius:99px;white-space:nowrap}
+.ztiles{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.ztiles div{background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:12px;padding:8px 6px;text-align:center}
+.ztiles b{display:block;font-size:20px;color:var(--gold)}.ztiles span{font-size:11px;color:var(--muted)}
+@media(max-width:520px){.ztiles{grid-template-columns:repeat(2,1fr)}}
+.zline{margin-top:8px;font-size:14px}.zbad{color:#ff8fa8;font-weight:700}
+.ch{margin:18px 0 6px;font:800 15px var(--body);color:var(--gold);letter-spacing:.02em}
+.ch:first-of-type{margin-top:8px}
+.warn911{background:rgba(255,61,110,.12);border:1px solid rgba(255,61,110,.5);border-radius:10px;padding:8px 10px;margin:0 0 10px}
+.btn.ok{background:#1f8f5f;border-color:#3dffb0;color:#fff}.btn.bad{background:#a3203f;border-color:#ff3d6e;color:#fff}
+.okc{color:#3dffb0;font-weight:700}.badc{color:#ff8fa8;font-weight:700}
+.cmap{height:260px;border-radius:14px;overflow:hidden;margin:12px 0 8px;background:#0e1430;border:1px solid var(--line)}
+.citylist div{padding:4px 0;border-bottom:1px solid var(--line);font-size:14px}
+#sqFeed,.feed{list-style:none;margin:10px 0 0;padding:0}#sqFeed li{padding:7px 0;border-bottom:1px solid var(--line);font-size:14px}
+.rp{padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}.rp img{display:block;max-width:100%;max-height:260px;border-radius:12px;margin-top:6px}
+.prev{width:64px;height:64px;object-fit:cover;border-radius:10px}
+#rpForm .row{margin:8px 0}#rpVid{flex:1;min-width:180px}
+.poll{padding:10px 0;border-bottom:1px solid var(--line)}.poll .popt{display:block;width:100%;text-align:left;margin:6px 0}
+.pbar{position:relative;display:flex;justify-content:space-between;gap:8px;padding:10px 12px;margin:6px 0;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.pbar .pf{position:absolute;inset:0 auto 0 0;background:rgba(145,70,255,.35)}.pbar span,.pbar b{position:relative}
+.pbar.mine{border-color:#9146ff}.pbar.win{border-color:#3dffb0}.pbar.win .pf{background:rgba(61,255,176,.3)}
+table.lb{width:100%;border-collapse:collapse;font-size:14px}.lb td{padding:6px 4px;border-bottom:1px solid var(--line)}.lb .n{text-align:right}
+/* CHAT layers */
+#chatTabs{display:flex;gap:4px;padding:4px 8px;border-bottom:1px solid #2f2f35;flex:none}
+#chatTabs[hidden]{display:none}
+#chatTabs button{flex:1;border:0;border-radius:8px;background:#26262c;color:#adadb8;font:700 12px var(--body);padding:6px;cursor:pointer;min-height:32px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#chatTabs button.on{background:#9146ff;color:#fff}
+.lay{display:flex;flex-direction:column;gap:5px;padding:6px 8px;border-top:1px solid #2f2f35;flex:none}
+.lay[hidden]{display:none}
+.lay .lr{display:flex;gap:5px}
+.lay input{flex:1;min-width:0;background:#0e0e10;border:1px solid #3a3a40;border-radius:8px;color:#efeff1;font:16px var(--body);padding:8px;min-height:40px}
+.lay input:disabled{opacity:.5}
+.lay button[type=submit],#chatJoinBtn{border:0;border-radius:8px;background:#9146ff;color:#fff;font:800 13px var(--body);padding:0 14px;min-height:40px;cursor:pointer}
+.lay button:disabled{opacity:.5}
+#chatAs{display:flex;align-items:center;justify-content:space-between;font-size:12px;color:#adadb8}
+#chatAs button{background:transparent;border:0;color:#c9b8ff;font:700 12px var(--body);cursor:pointer;padding:2px 4px;min-height:24px}
+#chatAs[hidden]{display:none}
+
+/* ALERT TYPES, PINS, GAME */
+.atypes{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 12px}
+@media(max-width:700px){.atypes{grid-template-columns:1fr}}
+.at{border:1px solid var(--line);border-left:4px solid var(--c);border-radius:14px;padding:10px 12px;background:rgba(255,255,255,.03)}
+.at .ah{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.at .ab{font:800 11px var(--body);letter-spacing:.08em;color:var(--muted);white-space:nowrap}
+.at.on{background:rgba(255,255,255,.07);box-shadow:0 0 0 1px var(--c)}
+.at.on .ab{background:var(--c);color:#1a1200;padding:2px 8px;border-radius:99px}
+.at .am{font-size:13px;margin-top:4px}.at .ad{font-size:12px;color:var(--muted);margin-top:4px}
+.at.pulse{animation:apulse 1.5s ease-in-out infinite}@keyframes apulse{50%{box-shadow:0 0 0 3px var(--c)}}
+@media(prefers-reduced-motion:reduce){.at.pulse{animation:none}}
+#chatPins{flex:none;max-height:70px;overflow-y:auto;background:#2b2150;border-bottom:1px solid #9146ff;padding:4px 10px;font-size:12px;color:#efeff1}
+#chatPins[hidden]{display:none}#chatPins div{padding:1px 0;word-break:break-word}
+.gwrap{position:relative;max-width:308px;margin:0 auto}
+#gcv{display:block;width:100%;height:auto;border-radius:14px;touch-action:none;background:#2a6f34}
+.gmsg{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;font:800 18px var(--body);color:#fff;background:rgba(0,0,0,.5);border-radius:14px;padding:12px}
+.gmsg:empty{display:none}
+.gpad{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:308px;margin:10px auto}
+.gpad button{font-size:22px;min-height:52px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--txt);cursor:pointer;touch-action:manipulation}
+.gpad button:active{background:#26305a}
 </style>
 </head>
 <body>
 <canvas id="rain" aria-hidden="true"></canvas><div id="flash" aria-hidden="true"></div>
 
 <header class="hero wrap" id="top">
-<svg class="logo" viewBox="0 0 640 300" role="img" aria-label="Wooden ark rocking on stormy waves under lightning clouds and a rainbow">
+<svg class="logo" viewBox="0 0 640 300" role="img" aria-label="Wooden ark rocking on stormy waves under lightning clouds">
 <defs>
 <linearGradient id="gHull" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e0953f"/><stop offset="1" stop-color="#6a3711"/></linearGradient>
 <linearGradient id="gCab" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f0b45a"/><stop offset="1" stop-color="#9a5a1e"/></linearGradient>
@@ -238,9 +307,6 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{o
 <radialGradient id="gCl" cx=".5" cy=".4" r=".7"><stop offset="0" stop-color="#4a58b8"/><stop offset="1" stop-color="#151c4a"/></radialGradient>
 <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
 </defs>
-<g fill="none" stroke-width="9" opacity=".6" stroke-linecap="round">
-<path d="M50 262A270 270 0 0 1 590 262" stroke="#ff3d6e"/><path d="M64 262A256 256 0 0 1 576 262" stroke="#ff9f1c"/><path d="M78 262A242 242 0 0 1 562 262" stroke="#ffe14a"/><path d="M92 262A228 228 0 0 1 548 262" stroke="#3dffb0"/><path d="M106 262A214 214 0 0 1 534 262" stroke="#35e0ff"/><path d="M120 262A200 200 0 0 1 520 262" stroke="#8a7bff"/>
-</g>
 <g fill="url(#gCl)" stroke="#6f7fe0" stroke-width="2">
 <circle cx="150" cy="62" r="36"/><circle cx="198" cy="48" r="44"/><circle cx="250" cy="62" r="36"/><rect x="120" y="62" width="160" height="38" rx="19" stroke="none"/>
 <circle cx="390" cy="56" r="38"/><circle cx="440" cy="42" r="46"/><circle cx="494" cy="58" r="36"/><rect x="360" y="58" width="164" height="40" rx="20" stroke="none"/>
@@ -268,40 +334,19 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{o
 <g stroke="#3b1c00" stroke-width="2.4" opacity=".55" fill="none"><path d="M112 208 L540 208"/><path d="M126 228 L526 228"/><path d="M150 248 L502 248"/></g>
 <g fill="#ffe9b0" stroke="#3b1c00" stroke-width="3"><circle cx="190" cy="222" r="10"/><circle cx="260" cy="232" r="10"/><circle cx="332" cy="236" r="10"/><circle cx="404" cy="232" r="10"/><circle cx="470" cy="222" r="10"/></g>
 
-<g transform="translate(166,190)"><g class="kit">
-<path class="tail tailp" d="M26 -8 C58 -6 66 -34 48 -52" fill="none" stroke="#c9ced6" stroke-width="13" stroke-linecap="round"/>
-<ellipse cx="0" cy="-22" rx="25" ry="22" fill="#cbd0d8"/><ellipse cx="0" cy="-14" rx="13" ry="15" fill="#eef0f4"/>
-<g stroke="#98a0ac" stroke-width="2.4" stroke-linecap="round"><path d="M-22 -30 l7 3"/><path d="M-24 -22 l8 2"/><path d="M22 -30 l-7 3"/><path d="M24 -22 l-8 2"/></g>
-<ellipse cx="-16" cy="-3" rx="10" ry="5.5" fill="#bcc3cd"/><ellipse cx="16" cy="-3" rx="10" ry="5.5" fill="#bcc3cd"/>
-<ellipse cx="10" cy="-9" rx="6" ry="9" fill="#dde1e7"/>
-<g class="paw"><ellipse cx="-11" cy="-10" rx="6" ry="10" fill="#dde1e7"/><circle cx="-11" cy="-3" r="2" fill="#f4aebb"/></g>
-<g transform="translate(0,-52)"><g class="head">
-<path d="M-19 -8 L-17 -33 L-3 -17Z" fill="#c3c9d2" stroke="#98a0ac" stroke-width="1.5" stroke-linejoin="round"/><path d="M-16 -12 L-15 -26 L-7 -17Z" fill="#f4aebb"/><path d="M-17 -33 L-18.5 -41" stroke="#7f8794" stroke-width="2" stroke-linecap="round"/>
-<path d="M19 -8 L17 -33 L3 -17Z" fill="#c3c9d2" stroke="#98a0ac" stroke-width="1.5" stroke-linejoin="round"/><path d="M16 -12 L15 -26 L7 -17Z" fill="#f4aebb"/><path d="M17 -33 L18.5 -41" stroke="#7f8794" stroke-width="2" stroke-linecap="round"/>
-<circle r="20" fill="#d3d8e0"/><ellipse cx="-16" cy="6" rx="9" ry="7" fill="#e7eaef"/><ellipse cx="16" cy="6" rx="9" ry="7" fill="#e7eaef"/>
-<path d="M-6 -15 l1 6 M0 -17 v8 M6 -15 l-1 6" stroke="#98a0ac" stroke-width="2.2" stroke-linecap="round" fill="none"/>
-<g class="eyes"><g class="eye"><ellipse cx="-8" cy="-1" rx="6" ry="7" fill="#b6f06a"/><ellipse cx="-8" cy="-1" rx="2.6" ry="5.5" fill="#111"/><circle cx="-6.5" cy="-3.5" r="1.8" fill="#fff"/></g><g class="eye"><ellipse cx="8" cy="-1" rx="6" ry="7" fill="#b6f06a"/><ellipse cx="8" cy="-1" rx="2.6" ry="5.5" fill="#111"/><circle cx="9.5" cy="-3.5" r="1.8" fill="#fff"/></g></g>
-<path d="M-2.5 6 h5 l-2.5 3.5z" fill="#f08aa0"/><path d="M0 9.5 v2 M0 11.5 q-3 3 -6 1 M0 11.5 q3 3 6 1" stroke="#6b7280" stroke-width="1.4" fill="none" stroke-linecap="round"/>
-<g stroke="#f4f6fa" stroke-width="1.2" stroke-linecap="round"><path d="M-10 8 l-16 -3 M-10 10 l-16 2 M10 8 l16 -3 M10 10 l16 2"/></g>
-</g></g>
-<g class="bub"><rect x="24" y="-116" width="74" height="28" rx="12" fill="#fff" stroke="#222" stroke-width="2"/><path d="M34 -89 l-5 13 l15 -13z" fill="#fff" stroke="#222" stroke-width="2"/><rect x="31" y="-91" width="12" height="4" fill="#fff"/><text x="61" y="-96" text-anchor="middle" font-family="Bungee,Impact,sans-serif" font-size="14" fill="#d7003f">MEOW?!</text></g>
-</g></g>
 </g>
 <g class="wave1"><path d="M-160 262 Q-120 238 -80 262 T0 262 T80 262 T160 262 T240 262 T320 262 T400 262 T480 262 T560 262 T640 262 T720 262 T800 262 V300 H-160Z" fill="url(#gW1)" opacity=".92"/></g>
 <g class="wave2"><path d="M-160 276 Q-120 256 -80 276 T0 276 T80 276 T160 276 T240 276 T320 276 T400 276 T480 276 T560 276 T640 276 T720 276 T800 276 V300 H-160Z" fill="url(#gW2)"/>
 <g fill="#fff" opacity=".85"><circle cx="40" cy="268" r="3"/><circle cx="190" cy="271" r="3"/><circle cx="360" cy="268" r="3"/><circle cx="520" cy="271" r="3"/></g></g>
 </svg>
-<h1><span class="a">NOAH'S ARK</span> <span class="b">RETRUNS</span></h1>
+<h1><span class="a">NOAH'S ARK</span> <span class="b">RETURNS</span></h1>
 <p class="tag">⚡ Storm · Flood · Rainfall command center ⚡</p>
-<div class="rainbow"></div>
 </header>
 
 <main class="wrap">
-  <div id="banner" class="banner watch" role="status" aria-live="polite">
-    <h2>Scanning the skies…</h2><p>Loading live NWS alerts, WPC outlooks and rainfall.</p>
-  </div>
+  <div id="banner" class="banner" role="alert" aria-live="assertive" hidden></div>
 
-  <div class="row" style="margin-bottom:14px">
+  <div hidden aria-hidden="true">
     <button class="btn primary" id="btnAlerts" type="button">🔔 Turn on alerts</button>
     <button class="btn" id="btnLoc" type="button">📍 <span id="locName">Melbourne, FL</span></button>
     <button class="btn" id="btnRefresh" type="button">⟳ Refresh</button>
@@ -315,19 +360,15 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{o
 
   <div class="stats" id="stats"></div>
 
-  <section id="alerts"><div class="sh"><h3>🚨 Live Alerts</h3><span id="alertsMeta"></span></div><div id="alertsBody" class="card muted">Loading…</div></section>
+    <section id="tv-sec"><div class="sh"><h3>📺 FOX 35 Orlando Live</h3></div>
+    <div class="card"><div id="tvTabs" hidden></div>
+      <div class="tv" id="tv"><span class="live">LIVE</span><button class="unmute" id="tvUnmute" type="button" hidden>🔇 Click here to unmute</button><button class="play" id="tvPlay" type="button" aria-label="Play FOX 35 Orlando live video"><span class="tri">▶</span><span>Tap to watch FOX 35 Orlando</span></button></div>
+      <div class="row" style="margin-top:10px"><a class="btn" target="_blank" rel="noopener" href="https://www.fox35orlando.com/live">Open on FOX 35 ↗</a><button id="tvStop" type="button" hidden></button></div>
+      <p class="wxt" style="margin:10px 0 0">The video starts automatically and muted. Tap the button on the video to turn the sound on. It pauses when you scroll away to save data.</p></div></section>
+  <section id="gboard"><div class="card"><div class="sh" style="margin:0 0 6px"><h3>🏆 Chicken Crossing leaderboard</h3><a class="btn" href="#game">Play ↓</a></div><div id="gBoard1" class="muted">Loading…</div></div></section>
+  
 
-  <section id="neighbor"><div class="sh"><h3>🪟 The Nosy Neighbor</h3><span id="nbMeta">peeking out the window…</span></div>
-    <div class="card" style="padding:0;overflow:hidden"><div class="blinds" aria-hidden="true"><span class="eye2"><i></i></span><span class="eye2"><i></i></span></div>
-    <div style="padding:14px"><p class="muted" style="margin:0 0 12px;font-size:14px">Pull up a chair, hon. I'm watching the news wires and the official NWS storm reports so you don't have to: folks stuck in the water, animals in trouble, people missing, and the sad news too.</p>
-    <div id="nbBody"><div class="muted">Adjusting the blinds…</div></div>
-    <p class="wxt" style="margin:10px 0 0">I only know what shows up in public headlines and NWS storm reports, so quiet doesn't mean safe. In an emergency call 911. Turn around, don't drown: never walk or drive through floodwater.</p></div></div></section>
-
-  <section id="tv-sec"><div class="sh"><h3>📺 FOX 35 Orlando Live</h3><span>tap to play</span></div>
-    <div class="card"><div class="tabs" id="tvTabs" role="tablist"><button class="tab" role="tab" data-v="247" aria-selected="true">FOX 35 24/7 stream</button><button class="tab" role="tab" data-v="live" aria-selected="false">Channel live now</button></div>
-      <div class="tv" id="tv"><span class="live">LIVE</span><button class="play" id="tvPlay" type="button" aria-label="Play FOX 35 Orlando live video"><span class="tri">▶</span><span>Tap to watch FOX 35 Orlando</span></button></div>
-      <div class="row" style="margin-top:10px"><a class="btn" target="_blank" rel="noopener" href="https://www.fox35orlando.com/live">Open on FOX 35 ↗</a><button class="btn" id="tvStop" type="button" hidden>⏹ Stop video</button></div>
-      <p class="wxt" style="margin:10px 0 0">Speed-smart: nothing from the video site loads until you tap play. It starts muted, pauses the page animations while it plays, and unloads itself after 20 seconds off-screen or in a background tab. If one feed is between broadcasts, switch to the other.</p></div></section>
+  <section id="alerts"><div id="alertTypes" class="atypes"></div><details class="coll" id="alertsDet"><summary><h3>🚨 Live Alerts</h3><span class="meta2" id="alertsMeta"></span><span class="chev">▾</span></summary><div class="inner"><div id="alertsBody" class="muted">Loading…</div></div></details></section>
 
   <section id="outlook"><div class="sh"><h3>🌊 Excessive Rain Outlook</h3><span>NOAA WPC · Days 1–5</span></div>
     <div class="card"><div class="ero" id="ero"></div>
@@ -335,6 +376,43 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{o
       <p class="wxt" style="margin-top:10px">Percent = chance of flash flooding within 25 miles of a point. Shown for your selected location.</p>
       <a class="btn" target="_blank" rel="noopener" href="https://www.wpc.ncep.noaa.gov/qpf/excessive_rainfall_outlook_ero.php">Open the full WPC outlook ↗</a></div></section>
 
+
+  <section id="zip"><div class="sh"><h3>📮 ZIP code check</h3><span>compact flood analysis</span></div>
+    <div class="card"><form id="zipForm" class="row" autocomplete="off"><input id="zipIn" class="inp" inputmode="numeric" pattern="[0-9]*" maxlength="5" placeholder="Enter a ZIP code" aria-label="ZIP code"><button class="btn primary" type="submit">Check</button></form><div id="zipOut" style="margin-top:6px"></div></div></section>
+  <section id="neighbor"><div class="sh"><h3>🪟 The Nosy Neighbor</h3><span id="nbMeta">peeking out the window…</span></div>
+    <div class="card" style="padding:0;overflow:hidden"><div class="blinds" aria-hidden="true"><span class="eye2"><i></i></span><span class="eye2"><i></i></span></div>
+    <div style="padding:14px"><p class="muted" style="margin:0 0 12px;font-size:14px">Pull up a chair, hon. I peek out the window every 3 minutes: official NWS storm reports and the live NWS feed, the FOX 35 Orlando newsroom (Florida), and public posts on the open Mastodon network. Facebook, Instagram, X and TikTok do not let me read their posts for free, so I can't see those. Social posts are unverified chatter.</p>
+    <div id="nbBody"><div class="muted">Adjusting the blinds…</div></div>
+    <p class="wxt" style="margin:10px 0 0">Quiet on the wire doesn't mean safe. In an emergency call 911. Turn around, don't drown: never walk or drive through floodwater.</p></div></div></section>
+
+  <section id="community"><div class="sh"><h3>👥 Neighbor Community</h3><span id="comMeta"></span></div>
+    <div class="card">
+      <p class="wxt warn911">🆘 Emergency? Call <b>911</b>. This board is not watched by emergency services.</p>
+      <p id="comStatus" class="muted" hidden></p>
+      <h4 class="ch">✅ Neighbor check-in</h4>
+      <p class="wxt" style="margin:0 0 8px">Shares only your city-level area (<b id="comArea">…</b>), never an address. Check-ins disappear after 12 hours.</p>
+      <div class="row"><button class="btn ok" id="ciSafe" type="button">✅ I'm safe</button><button class="btn bad" id="ciHelp" type="button">🆘 I need help</button><button class="btn" id="ciClear" type="button" hidden>Remove mine</button></div>
+      <input id="ciNote" class="inp" maxlength="60" placeholder="Optional short note (no names or addresses)" aria-label="Optional note" style="width:100%;margin-top:8px">
+      <p id="ciMsg" class="wxt" style="margin:6px 0 0"></p>
+      <div id="cmap" class="cmap" aria-label="Community check-in map"></div>
+      <div class="wxt" style="margin:0 0 6px">🟢 safe · 🔴 needs help · 🟡 moderator-approved report. Pins are approximate to the area, not exact spots.</div>
+      <div id="cityList" class="citylist"></div>
+      <h4 class="ch">🏘️ Flood-watch squads</h4>
+      <p class="wxt" style="margin:0 0 8px">Join your neighborhood squad for a mini feed and a members-only chat for just that area.</p>
+      <div id="sqJoin"><div class="row"><select id="sqSel" class="inp" aria-label="Choose a squad"></select><input id="sqCustom" class="inp" placeholder="Or type City, ST" maxlength="44" aria-label="Another city"><button class="btn primary" id="sqBtn" type="button">Join squad</button></div><p id="sqMsg" class="wxt badc" style="margin:6px 0 0"></p></div>
+      <div id="sqMine" hidden><div class="row"><b id="sqName"></b><span id="sqN" class="muted"></span><button class="btn" id="sqChat" type="button">💬 Open squad chat</button><button class="btn" id="sqLeave" type="button">Leave</button></div><ul id="sqFeed"></ul></div>
+      <h4 class="ch">📸 Flood reports</h4>
+      <form id="rpForm" autocomplete="off">
+        <div class="row"><select id="rpCat" class="inp" aria-label="Report type"><option value="road">🚧 Road flooded or closed</option><option value="home">🏠 Home or yard flooding</option><option value="water">🌊 Rising water or creek</option><option value="power">⚡ Power outage</option><option value="other">📍 Something else</option></select><span class="muted" id="rpArea"></span></div>
+        <textarea id="rpTxt" class="inp" maxlength="280" rows="3" placeholder="What are you seeing? (at least 10 characters, no addresses)" aria-label="Report details"></textarea>
+        <div class="row"><label class="btn" for="rpImg">📷 Add photo</label><input id="rpImg" type="file" accept="image/*" hidden><img id="rpPrev" class="prev" alt="Selected photo preview" hidden><input id="rpVid" class="inp" placeholder="Video link (YouTube, Facebook, TikTok, Instagram)" maxlength="200" aria-label="Video link"></div>
+        <p class="wxt" style="margin:0 0 8px">A moderator reviews every report before it shows up. No faces, license plates, house numbers or addresses please.</p>
+        <div class="row"><button class="btn primary" type="submit">Send report</button><span id="rpMsg" class="wxt"></span></div>
+      </form>
+      <div id="rpList" style="margin-top:8px"></div>
+      <h4 class="ch">🔮 Polls and predictions</h4><div id="polls"></div>
+      <h4 class="ch">🏆 Prediction leaderboard</h4><div id="board"></div>
+    </div></section>
   <section id="rain-sec"><div class="sh"><h3>🌧️ Rainfall &amp; Flood Meter</h3><span>inches · by day</span></div>
     <div class="grid2"><div class="card"><div class="gauge" id="gauge"></div><div id="meter" class="meter"></div></div>
     <div class="card"><div id="days"></div></div></div>
@@ -351,6 +429,14 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{o
       <a class="btn" target="_blank" rel="noopener" href="https://www.nhc.noaa.gov/">National Hurricane Center <span>↗</span></a>
       <a class="btn" id="nwsLink" target="_blank" rel="noopener" href="https://www.weather.gov/">Official NWS forecast <span>↗</span></a>
     </div></section>
+  <section id="game"><div class="sh"><h3>🐔 Chicken Crossing</h3><span id="gBest"></span></div>
+    <div class="card"><p class="wxt" style="margin:0 0 8px">Help the chicken cross the flooded-town road. Tap ▲ (or swipe up) to hop forward, ◀ ▶ to dodge. Every row is a point. Don't get splatted!</p>
+      <div class="gwrap"><canvas id="gcv" width="308" height="396" aria-label="Chicken Crossing game"></canvas><div id="gMsg" class="gmsg"></div></div>
+      <div class="gpad"><button id="gL" type="button" aria-label="Left">◀</button><button id="gU" type="button" aria-label="Forward">▲</button><button id="gR" type="button" aria-label="Right">▶</button><button id="gD" type="button" aria-label="Back">▼</button></div>
+      <form id="gName" class="row" hidden style="max-width:308px;margin:0 auto 8px"><input id="gNm" class="inp" maxlength="20" placeholder="Username to post score" aria-label="Username" style="flex:1"><button class="btn primary" type="submit">Post</button></form>
+      <p id="gMine" class="wxt" style="text-align:center"></p>
+      <h4 class="ch">🏆 Top hoppers</h4><div id="gBoard2"></div></div></section>
+
 </main>
 
 <footer class="wrap">
@@ -361,19 +447,25 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{o
 </footer>
 
 <div id="chat" aria-live="polite"><button id="chatBtn" type="button" aria-label="Open live chat"><span class="dot"></span>💬 Live chat <span id="chatOn" style="font-weight:600;opacity:.9"></span><span class="bd" id="chatBd" hidden>0</span></button>
-<div id="chatPanel" role="dialog" aria-label="Live chat"><div id="chatHd"><span>Stream chat</span><small id="chatOn2"></small><button id="chatX" type="button" aria-label="Close chat">✕</button></div>
-<div id="chatMsgs"><div class="sys">Welcome to the Ark chat! Be kind, no links. Stay safe out there. 🛶</div></div>
-<form id="chatForm" autocomplete="off"><input id="chatNm" maxlength="20" placeholder="Pick a chat name" aria-label="Chat name"><div id="chatEm"><span>🌧️</span><span>⛈️</span><span>🌊</span><span>🛶</span><span>🐱</span><span>🙏</span><span>⚠️</span></div><input id="chatIn" maxlength="200" placeholder="Send a message" aria-label="Message"><button type="submit">Chat</button></form></div></div>
+<div id="chatPanel" role="dialog" aria-label="Live chat"><div id="chatHd"><span>Chat</span><small id="chatOn2">public only, no DMs</small><button id="chatX" type="button" aria-label="Minimize chat">–</button></div>
+<div id="chatTabs" hidden><button type="button" data-r="all" class="on">Everyone</button><button type="button" data-r="squad" id="chatTabSq"></button></div>
+<div id="chatPins" hidden></div>
+<div id="chatMsgs"><div class="sys">Public chat only: there are no private messages. Harassment, slurs, threats, tagging people and sharing personal info are blocked. Tap a message to react, reply or report.</div></div>
+<div id="chatJoin" class="lay"><div class="lr"><input id="chatNm" maxlength="20" placeholder="Create your username" aria-label="Create your username" autocomplete="nickname"><button id="chatJoinBtn" type="button">Join</button></div></div>
+<form id="chatForm" class="lay" autocomplete="off"><div id="chatAs" hidden><span id="chatAsName"></span><button type="button" id="chatChg">change</button></div><div id="chatReply"><span></span><button type="button" id="chatRX" aria-label="Cancel reply">✕</button></div><div class="lr"><input id="chatIn" maxlength="200" placeholder="Create a username first" aria-label="Say something" disabled><button type="submit" id="chatSend" disabled>Send</button></div></form></div></div>
 
 <nav class="bar5" id="nav" aria-label="Sections">
   <a href="#top" data-s="top"><span>🏠</span>Now</a>
-  <a href="#alerts" data-s="alerts"><span>🚨</span>Alerts</a>
-  <a href="#neighbor" data-s="neighbor"><span>🪟</span>Gossip</a>
   <a href="#tv-sec" data-s="tv-sec"><span>📺</span>TV</a>
+  <a href="#alerts" data-s="alerts"><span>🚨</span>Alerts</a>
   <a href="#outlook" data-s="outlook"><span>🌊</span>Outlook</a>
+  <a href="#zip" data-s="zip"><span>📮</span>ZIP</a>
+  <a href="#neighbor" data-s="neighbor"><span>🪟</span>Gossip</a>
+  <a href="#community" data-s="community"><span>👥</span>Squads</a>
   <a href="#rain-sec" data-s="rain-sec"><span>🌧️</span>Rain</a>
   <a href="#hourly" data-s="hourly"><span>⏱️</span>Hourly</a>
   <a href="#maps" data-s="maps"><span>🗺️</span>Maps</a>
+  <a href="#game" data-s="game"><span>🐔</span>Game</a>
 </nav>
 
 <script>
@@ -401,6 +493,21 @@ function hLabel(key){var h=+key.slice(11,13);return (h%12||12)+(h<12?' AM':' PM'
 function addDays(ds,n){var d=new Date(ds+'T00:00:00Z');d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10)}
 function emoji(sf,day){sf=(sf||'').toLowerCase();if(/thunder/.test(sf))return '⛈️';if(/snow|sleet|ice/.test(sf))return '❄️';if(/rain|shower|drizzle/.test(sf))return '🌧️';if(/fog|haze|smoke/.test(sf))return '🌫️';if(/partly|mostly sunny|mostly clear/.test(sf))return day===false?'🌙':'⛅';if(/cloud|overcast/.test(sf))return '☁️';if(/sunny|clear/.test(sf))return day===false?'🌙':'☀️';return day===false?'🌙':'🌤️'}
 function rc(r){return r>=1?3:r>=.3?2:r>=.1?1:0}
+
+/* ---------- shared word filter ---------- */
+var BADW=['nigger','nigga','faggot','tranny','retard','spic','chink','kike','gook','wetback','beaner','towelhead','raghead','fuck','shit','bitch','asshole','cunt','dick','pussy','whore','slut','rapist','kys'];
+var BADP=[/kill\s*(your|ur)\s*self/,/go\s*(and\s*)?die/,/hang\s*(your|ur)\s*self/,/\b(i|we)\s*(will|ll|am going to|m gonna|gonna|wanna)\s*(kill|hurt|find|beat|shoot|rape)\s*(you|u)\b/,/\b(you|u)\s*(are|r|re)?\s*(so\s*)?(stupid|ugly|worthless|trash|pathetic|disgusting|dumb)\b/];
+function normT(s){return String(s).toLowerCase().replace(/[01345@$!|]/g,function(c){return {'0':'o','1':'i','3':'e','4':'a','5':'s','@':'a','$':'s','!':'i','|':'i'}[c]}).replace(/\b[a-z](?:[\s.\-_*]+[a-z]\b)+/g,function(m){return m.replace(/[^a-z]/g,'')})}
+function dd(s){return s.replace(/(.)\1+/g,'$1')}
+function badWord(t){
+  var a=normT(t),a2=dd(a),b=dd(a.replace(/[^a-z]/g,'')),i,w,w2;
+  for(i=0;i<BADW.length;i++){w=BADW[i];w2=dd(w);
+    if(new RegExp('(^|[^a-z])'+w+'(s|es|ed|ing|er|y|in)?($|[^a-z])').test(a))return true;
+    if(new RegExp('(^|[^a-z])'+w2+'(s|es|ed|ing|er|y|in)?($|[^a-z])').test(a2))return true;
+    if(w.length>=6&&b.indexOf(w2)>=0)return true}
+  for(i=0;i<BADP.length;i++)if(BADP[i].test(a))return true;
+  return false}
+function privateInfo(t){t=String(t);return /@\w/.test(t)||/\b\d{3}[\s.\-]?\d{3}[\s.\-]?\d{4}\b/.test(t)||/\b\d{2,5}\s+[a-z]+\s+(st|street|ave|avenue|rd|road|dr|drive|ln|lane|blvd|ct|court|way)\b/i.test(t)}
 
 /* ---------- ERO ---------- */
 var ERO_RANK={MARGINAL:1,SLIGHT:2,MODERATE:3,HIGH:4}, ERO_COL={0:'#5c6fa8',1:'#66d17a',2:'#ffe14a',3:'#ff4d4d',4:'#ff4df0'}, ERO_NAME=['None','Marginal','Slight','Moderate','High'], ERO_PCT=['<5%','≥5%','≥15%','≥40%','≥70%'];
@@ -436,9 +543,9 @@ function loadAlerts(){
 }
 function fmtT(iso){try{return new Date(iso).toLocaleString([], {weekday:'short',hour:'numeric',minute:'2-digit'})}catch(e){return ''}}
 function renderAlerts(){
-  var b=$('#alertsBody'),n=S.alerts.length;
+  S.alOK=true;renderAlertTypes();var b=$('#alertsBody'),n=S.alerts.length,det=$('#alertsDet');if(det&&S.alerts.some(isCrit)&&!det.dataset.touched)det.open=true;
   $('#alertsMeta').textContent=n?n+' active':'none active';
-  if(!n){b.className='card';b.innerHTML='<div class="calmbox">✅ No active NWS alerts for this location right now.</div>';return}
+  if(!n){b.className='';b.innerHTML='<div class="calmbox">✅ No active NWS alerts for this location right now.</div>';return}
   b.className='';
   b.innerHTML=S.alerts.map(function(a,i){
     var c=isCrit(a);
@@ -454,8 +561,9 @@ function renderBanner(){
   else if(S.alerts.length||r>=2){cls='watch';h='👀 STAY AWARE';p=(S.alerts.length?S.alerts.length+' active advisory/statement. ':'')+(r>=2?'Slight flash-flood risk today. ':'')+'No warnings right now.'}
   else{cls='calm';h='✅ CALM SKIES';p='No active alerts'+(r===1?' (Marginal rain risk noted by WPC).':'.')}
   el.className='banner '+cls;
+  el.hidden=(cls!=='critical');
   el.innerHTML='<h2>'+h+'</h2><p>'+esc(p)+'</p><div class="meta"><span>📍 '+esc(loc.name)+'</span><span id="bMeta"></span></div>';
-  document.title=(cls==='critical'?'🚨 ':'')+"NOAH'S ARK RETRUNS";
+  document.title=(cls==='critical'?'🚨 ':'')+"NOAH'S ARK RETURNS";
   tickMeta();
 }
 
@@ -536,15 +644,15 @@ function sumN(n){var s=0;S.rows.slice(0,n).forEach(function(r){s+=r.p});return s
 function renderStats(){
   var tot=sumN(9999),peak=S.rows.reduce(function(m,r){return r.p>m.p?r:m},{p:0,k:''}),d1=S.ero[0]?S.ero[0].rank:0;
   $('#stats').innerHTML=
-   '<div class="stat"><div class="k">Rain thru Sun</div><div class="v">'+f2(tot)+'<small> in</small></div><div class="s">'+S.rows.length+' hrs to Sun 11:55 PM</div></div>'+
+   '<div class="stat"><div class="k">Rain through Sun</div><div class="v">'+f2(tot)+'<small> in</small></div><div class="s">'+S.rows.length+' hours to Sun 11:55 PM</div></div>'+
    '<div class="stat"><div class="k">Next 24 hours</div><div class="v">'+f2(sumN(24))+'<small> in</small></div><div class="s">next 6h: '+f2(sumN(6))+' in</div></div>'+
    '<div class="stat"><div class="k">Peak rain rate</div><div class="v">'+f2(peak.p)+'<small> in/hr</small></div><div class="s">'+(peak.p>0?DAYS[dparts(peak.k).dow]+' '+hLabel(peak.k):'none expected')+'</div></div>'+
    '<div class="stat"><div class="k">WPC risk today</div><div class="v" style="color:'+ERO_COL[d1]+'">'+(d1?ERO_NAME[d1]:'None')+'</div><div class="s">'+(d1?ERO_PCT[d1]+' flash flood':'below 5%')+'</div></div>';
 }
 function renderRain(om){
   var tot=sumN(9999),ratio=Math.min(tot/8,1),y=118-ratio*100;
-  $('#gauge').innerHTML='<svg viewBox="0 0 150 150" role="img" aria-label="Waterline gauge showing '+f2(tot)+' inches of rain through Sunday"><defs><clipPath id="cc"><circle cx="75" cy="75" r="62"/></clipPath><linearGradient id="gw" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#35e0ff"/><stop offset="1" stop-color="#1a3fb0"/></linearGradient></defs><circle cx="75" cy="75" r="66" fill="#0a1230" stroke="#ffc23d" stroke-width="5"/><g clip-path="url(#cc)"><g transform="translate(0,'+y.toFixed(1)+')"><path class="wv" d="M-100 0 Q-80 -9 -60 0 T-20 0 T20 0 T60 0 T100 0 T140 0 T180 0 T220 0 T260 0 V160 H-100Z" fill="url(#gw)" opacity=".9"/></g></g><text class="gv" x="75" y="78">'+f2(tot)+'"</text><text class="gl" x="75" y="96">RAIN THRU SUN</text></svg>'+
-  '<div class="tot"><div><b>'+f2(sumN(6))+'"</b><span>next 6h</span></div><div><b>'+f2(sumN(12))+'"</b><span>next 12h</span></div><div><b>'+f2(sumN(24))+'"</b><span>next 24h</span></div><div><b>'+f2(sumN(48))+'"</b><span>next 48h</span></div><div><b>'+f2(sumN(72))+'"</b><span>next 72h</span></div><div><b>'+f2(S.past48)+'"</b><span>past 48h (est.)</span></div></div>';
+  $('#gauge').innerHTML='<svg viewBox="0 0 150 150" role="img" aria-label="Waterline gauge showing '+f2(tot)+' inches of rain through Sunday"><defs><clipPath id="cc"><circle cx="75" cy="75" r="62"/></clipPath><linearGradient id="gw" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#35e0ff"/><stop offset="1" stop-color="#1a3fb0"/></linearGradient></defs><circle cx="75" cy="75" r="66" fill="#0a1230" stroke="#ffc23d" stroke-width="5"/><g clip-path="url(#cc)"><g transform="translate(0,'+y.toFixed(1)+')"><path class="wv" d="M-100 0 Q-80 -9 -60 0 T-20 0 T20 0 T60 0 T100 0 T140 0 T180 0 T220 0 T260 0 V160 H-100Z" fill="url(#gw)" opacity=".9"/></g></g><text class="gv" x="75" y="78">'+f2(tot)+'"</text><text class="gl" x="75" y="96">RAIN THROUGH SUN</text></svg>'+
+  '<div class="tot"><div><b>'+f2(sumN(6))+'"</b><span>next 6h</span></div><div><b>'+f2(sumN(12))+'"</b><span>next 12h</span></div><div><b>'+f2(sumN(24))+'"</b><span>next 24h</span></div><div><b>'+f2(sumN(48))+'"</b><span>next 48h</span></div><div><b>'+f2(sumN(72))+'"</b><span>next 72h</span></div><div><b>'+f2(S.past48)+'"</b><span>past 48h (estimate)</span></div></div>';
   var peak=sumN(9999)?S.rows.reduce(function(m,r){return r.p>m?r.p:m},0):0,t24=sumN(24),d1=S.ero[0]?S.ero[0].rank:0;
   var lv='LOW',why='Rain totals and rates are below flood thresholds.';
   if(peak>=1||t24>=4||d1>=4){lv='EXTREME';why='Flash-flood rainfall rates or totals possible. Avoid low-lying roads.'}
@@ -574,7 +682,7 @@ var mapsVisible=false,mapsStale=true;
 function renderMaps(){mapsStale=true;if(mapsVisible)paintMaps()}
 function paintMaps(){
   mapsStale=false;var t=Date.now(),st=S.station||'KMLB',g=$('#mapGrid');
-  var f=function(src,cap,ttl){return '<figure><img loading="lazy" alt="'+esc(ttl)+'" src="'+src+'" onerror="this.closest(\'figure\').style.display=\'none\'"><figcaption>'+cap+'</figcaption></figure>'};
+  var f=function(src,cap,ttl){return '<figure><img loading="lazy" decoding="async" fetchpriority="low" alt="'+esc(ttl)+'" src="'+src+'" onerror="this.closest(\'figure\').style.display=\'none\'"><figcaption>'+cap+'</figcaption></figure>'};
   g.innerHTML=
    f('https://radar.weather.gov/ridge/standard/'+st+'_loop.gif?t='+t,'<b>Live radar loop</b> · '+esc(st),'Live radar loop')+
    f('https://www.wpc.ncep.noaa.gov/qpf/94ewbg.gif?t='+Math.floor(t/3600000),'<b>Excessive Rainfall Outlook · Day 1</b> · WPC','Excessive rainfall outlook day 1')+
@@ -582,16 +690,19 @@ function paintMaps(){
    f('https://www.wpc.ncep.noaa.gov/qpf/p168i.gif?t='+Math.floor(t/3600000),'<b>7-day rainfall forecast (inches)</b> · WPC','Seven day rainfall forecast in inches');
 }
 
-/* ---------- NOSY NEIGHBOR ---------- */
+/* ---------- NOSY NEIGHBOR (first to know) ---------- */
 var CATS=[
  {k:'stuck',e:'🚗',t:'Folks stuck in the water',has:'Oh honey, you will NOT believe it. People are stuck out there. Stay home and stay dry, I mean it.',none:"Nobody stuck that I've heard about, and believe me, I'd know. 👀"},
  {k:'animals',e:'🐾',t:'Critters in the floodwater',has:"Poor little critters! Somebody's got animals in the water. Bring your pets inside!",none:'No animals-in-the-water gossip yet. The gators are minding their own business. For now.'},
  {k:'missing',e:'🔦',t:'Missing & searched-for',has:'Sweetheart, this one is serious. Folks are being searched for. Check the official links and keep them in your thoughts.',none:'Nobody reported missing, knock on wood. 🪵'},
  {k:'deaths',e:'💔',t:'The sad news',somber:1,has:"I'll keep my voice down for this one. Heartbreaking news. Please, please stay out of floodwater.",none:'No sad news in anything I can see, thank goodness.'},
- {k:'roads',e:'🌊',t:'Streets underwater',has:'The roads are a MESS, hon. Water over the streets out there. Find another way.',none:"Official reports don't show flooded streets right now. I'll keep watching."}
+ {k:'roads',e:'🌊',t:'Streets underwater',has:'The roads are a MESS, hon. Water over the streets out there. Find another way.',none:"Nothing about flooded streets right now. I'll keep watching."}
 ];
 var RX={deaths:/fatal|death|dead|died|drown|killed|body found/i,missing:/missing|search(ing|ed)? for|swept away|unaccounted/i,animals:/animal|\bdogs?\b|\bcats?\b|horse|cattle|livestock|alligator|gator|manatee|\bpets?\b|puppy|kitten/i,stuck:/rescue|stranded|trapped|stuck|submerged|swept|vehicle/i};
+var RELEVANT=/flood|rain|storm|water|drown|swept|rescue|surge|tornado|hurricane|lightning|evacuat|road closed|warning|advisory|watch/i;
+var STN={AL:'Alabama',AK:'Alaska',AZ:'Arizona',AR:'Arkansas',CA:'California',CO:'Colorado',CT:'Connecticut',DE:'Delaware',FL:'Florida',GA:'Georgia',HI:'Hawaii',ID:'Idaho',IL:'Illinois',IN:'Indiana',IA:'Iowa',KS:'Kansas',KY:'Kentucky',LA:'Louisiana',ME:'Maine',MD:'Maryland',MA:'Massachusetts',MI:'Michigan',MN:'Minnesota',MS:'Mississippi',MO:'Missouri',MT:'Montana',NE:'Nebraska',NV:'Nevada',NH:'New Hampshire',NJ:'New Jersey',NM:'New Mexico',NY:'New York',NC:'North Carolina',ND:'North Dakota',OH:'Ohio',OK:'Oklahoma',OR:'Oregon',PA:'Pennsylvania',RI:'Rhode Island',SC:'South Carolina',SD:'South Dakota',TN:'Tennessee',TX:'Texas',UT:'Utah',VT:'Vermont',VA:'Virginia',WA:'Washington',WV:'West Virginia',WI:'Wisconsin',WY:'Wyoming'};
 var ENTRY=/^(\d{3,4} [AP]M)\s+(.+?)\s{2,}(.+?)\s{2,}(\d+\.\d+[NS])\s+(\d+\.\d+[WE])/;
+var seenN={},firstLoad=true,botId=null;
 function parseLSR(txt,iss){
   var L=txt.split('\n'),out=[];
   for(var i=0;i<L.length;i++){
@@ -605,35 +716,92 @@ function parseLSR(txt,iss){
   }
   return out;
 }
-function lsrCat(r){var s=r.event+' '+r.rem;
+function classify(s){
   if(RX.deaths.test(s))return 'deaths';if(RX.missing.test(s))return 'missing';if(RX.animals.test(s))return 'animals';if(RX.stuck.test(s))return 'stuck';
-  if(/flood|heavy rain/i.test(r.event))return 'roads';return null}
+  if(/flood|heavy rain|road closed|underwater/i.test(s))return 'roads';return null}
+function strip(h){var s=String(h||'').replace(/<br\s*\/?>/gi,'\n').replace(/<\/p>/gi,'\n');var d=new DOMParser().parseFromString(s,'text/html');return (d.body.textContent||'').replace(/[ \t]+/g,' ').trim()}
+function headline(t){var s=t.replace(/\s+/g,' ').trim(),m=s.match(/^\d+ [A-Z]{4}\d{2} [A-Z]{4} \d{6} [A-Z0-9]{5,6} (.+?) National Weather Service ([A-Za-z. ]+? [A-Z]{2}) \d/);
+  if(m)return m[1]+' · NWS '+m[2];
+  return s.replace(/^\d+ [A-Z]{4}\d{2} [A-Z]{4} \d{6} /,'')}
+function recent(i){return i.ts>0&&Date.now()-i.ts<48*3600000}
 function loadLSR(){
   if(!S.cwa)return Promise.resolve([]);
   return J('https://api.weather.gov/products/types/LSR/locations/'+S.cwa).then(function(d){
     var ids=(d['@graph']||[]).slice(0,4).map(function(x){return x.id});
     return Promise.all(ids.map(function(id){return J('https://api.weather.gov/products/'+id,1).catch(function(){return null})}));
-  }).then(function(ps){var out=[];ps.forEach(function(p){if(p&&p.productText&&Date.now()-Date.parse(p.issuanceTime)<36*3600000)out=out.concat(parseLSR(p.productText,p.issuanceTime))});return out}).catch(function(){return []});
+  }).then(function(ps){var out=[];ps.forEach(function(p){if(p&&p.productText&&Date.now()-Date.parse(p.issuanceTime)<36*3600000)parseLSR(p.productText,p.issuanceTime).forEach(function(r){
+      var c=classify(r.event+' '+r.rem);if(!c)return;
+      out.push({t:r.event+(r.mag?' '+r.mag:'')+' · '+r.city+(r.county?', '+r.county+' Co.':'')+(r.rem?' — '+r.rem.slice(0,200):''),l:'https://www.weather.gov/'+S.cwa.toLowerCase()+'/',ts:Date.parse(p.issuanceTime)||0,src:'NWS storm report ('+r.time+')',kind:'lsr',cat:c})})});return out}).catch(function(){return []});
+}
+function loadBot(){
+  if(!S.cwa)return Promise.resolve([]);
+  var acct='iembot_'+S.cwa.toLowerCase()+'@bots.krohsnest.com';
+  var idp=(botId&&botId.acct===acct)?Promise.resolve(botId.id):J('https://mastodon.social/api/v1/accounts/lookup?acct='+encodeURIComponent(acct),1).then(function(a){botId={acct:acct,id:a.id};return a.id});
+  return idp.then(function(id){return J('https://mastodon.social/api/v1/accounts/'+id+'/statuses?limit=15&exclude_replies=true&exclude_reblogs=true',1)}).then(function(a){
+    return (a||[]).map(function(s){return {t:headline(strip(s.content)),l:s.url,ts:Date.parse(s.created_at)||0,src:'NWS '+S.cwa+' live feed',kind:'nws'}}).filter(function(i){return i.t&&recent(i)&&/warning|advisory|statement|watch|flood|storm|rain|wind|tornado|surf|rip/i.test(i.t)});
+  }).catch(function(){return []});
+}
+function loadFox(){
+  if(S.state!=='FL')return Promise.resolve([]);
+  return Promise.all(['news','weather'].map(function(c){return fetch('https://www.fox35orlando.com/rss/category/'+c,{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).catch(function(){return ''})})).then(function(xs){
+    var seen={},res=[];
+    xs.forEach(function(x){if(!x)return;var d=new DOMParser().parseFromString(x,'text/xml');[].forEach.call(d.querySelectorAll('item'),function(it){
+      var g=function(t){var e=it.querySelector(t);return e?e.textContent.trim():''},t=g('title'),l=g('link');
+      if(!t||!l||seen[l])return;seen[l]=1;res.push({t:t,l:l,ts:Date.parse(g('pubDate'))||0,src:'FOX 35 Orlando newsroom',kind:'news'})})});
+    return res.filter(function(i){return recent(i)&&RELEVANT.test(i.t)});
+  });
+}
+function locHit(t){var s=t.toLowerCase(),c=(S.city||'').toLowerCase(),sn=(STN[S.state]||'').toLowerCase();
+  return !!((c&&s.indexOf(c)>=0)||(sn&&s.indexOf(sn)>=0)||(S.state&&new RegExp('#?'+S.state.toLowerCase()+'wx\\b').test(s)))}
+function loadSocial(){
+  var tags=['flooding','flood'];if(S.state)tags.push(S.state.toLowerCase()+'wx');
+  return Promise.all(tags.map(function(tg){return J('https://mastodon.social/api/v1/timelines/tag/'+tg+'?limit=40',1).catch(function(){return []})})).then(function(arrs){
+    var seen={},out=[];
+    arrs.forEach(function(a){(a||[]).forEach(function(s){
+      if(!s||s.reblog||s.sensitive||s.in_reply_to_id||seen[s.id])return;seen[s.id]=1;
+      var raw=strip(s.content),t=headline(raw);
+      if(t.length<15||!RELEVANT.test(t)||!locHit(raw))return;
+      out.push({t:t.slice(0,260),l:s.url,ts:Date.parse(s.created_at)||0,src:(/^iembot_/.test((s.account&&s.account.acct)||'')?'NWS bot · @':'Social · @')+((s.account&&s.account.acct)||'user'),kind:/^iembot_/.test((s.account&&s.account.acct)||'')?'nws':'social'})})});
+    return out.filter(recent);
+  });
 }
 function loadNews(){
   if(!S.city||!S.state)return Promise.resolve(null);
   return J((window.ARK_API||'')+'/api/neighbors?place='+encodeURIComponent(S.city)+'&st='+encodeURIComponent(S.state),1).catch(function(){return null});
 }
+var nbSeen=false,nbTimer=null;
+function nbGo(){return loadNeighbors().then(function(){S.nbLoaded=true})}
+function nbGate(){
+  if(typeof comArea==='function')comArea();
+  if(nbSeen||S.nbLoaded)return nbGo();
+  if(!nbTimer)nbTimer=setTimeout(function(){nbSeen=true;if(!S.nbLoaded&&S.cwa)nbGo()},7000);
+  return Promise.resolve();
+}
 function loadNeighbors(){
-  return Promise.all([loadLSR(),loadNews()]).then(function(r){S.lsr=r[0];S.news=r[1];renderNeighbor()}).catch(function(){});
+  return Promise.all([loadLSR(),loadFox(),loadSocial(),loadBot(),loadNews()]).then(function(r){
+    var items=[].concat(r[0],r[1],r[2],r[3],S.comItems||[]);S.news=r[4];
+    if(r[4]&&r[4].items)Object.keys(r[4].items).forEach(function(k){(r[4].items[k]||[]).forEach(function(n){items.push({t:n.title,l:n.link,ts:n.ts,src:(n.src||'News'),kind:'news',cat:k})})});
+    var seen={};S.nb=items.filter(function(i){var key=(i.l||i.t).toLowerCase();if(seen[key]||badWord(i.t))return false;seen[key]=1;return true});
+    renderNeighbor();
+  }).catch(function(){});
 }
 function ago(ms){var m=Math.round((Date.now()-ms)/60000);if(m<1)return 'just now';if(m<60)return m+'m ago';var h=Math.round(m/60);return h<48?h+'h ago':Math.round(h/24)+'d ago'}
+function li(i,now){
+  var age=i.ts?now-i.ts:1e12,isNew=age<900000,lab={lsr:['NWS REPORT',''],nws:['NWS LIVE',''],news:['NEWSROOM','news'],social:['SOCIAL','social'],community:['COMMUNITY','news']}[i.kind]||['NEWS','news'];
+  return '<li><span class="off '+lab[1]+'">'+lab[0]+'</span>'+(isNew?'<span class="new">NEW</span>':'')+'<a href="'+(/^https?:\/\//.test(i.l)||i.l==='#community'?esc(i.l):'#')+'" target="_blank" rel="noopener">'+esc(i.t.slice(0,240))+'</a><small>'+esc(i.src)+(i.ts?' · '+ago(i.ts):'')+(i.kind==='social'?' · unverified chatter':'')+'</small></li>';
+}
 function renderNeighbor(){
-  var by={stuck:[],animals:[],missing:[],deaths:[],roads:[]},total=0;
-  (S.lsr||[]).forEach(function(r){var c=lsrCat(r);if(c){by[c].push('<li><span class="off">NWS REPORT</span><span class="nws"><b>'+esc(r.event)+(r.mag?' '+esc(r.mag):'')+'</b> · '+esc(r.city)+(r.county?', '+esc(r.county)+' Co.':'')+'</span><small>'+esc(r.time)+' '+esc(r.date||'')+(r.rem?' · '+esc(r.rem.slice(0,220)):'')+'</small></li>')}});
-  var news=(S.news&&S.news.items)||{};
-  ['stuck','animals','missing','deaths'].forEach(function(k){(news[k]||[]).forEach(function(n){by[k].push('<li><a href="'+esc(n.link)+'" target="_blank" rel="noopener">'+esc(n.title)+'</a><small>'+esc(n.src||'News')+' · '+(n.ts?ago(n.ts):'')+'</small></li>')})});
-  var out=CATS.map(function(c){var items=by[c.k].slice(0,6);total+=items.length;
-    return '<div class="nb'+(items.length?' has':'')+(c.somber?' somber':'')+'"><h4>'+c.e+' '+c.t+(items.length?' <span class="pill">'+items.length+'</span>':'')+'</h4><div class="q">“'+esc(items.length?c.has:c.none)+'”</div>'+(items.length?'<ul>'+items.join('')+'</ul>':'')+'</div>';
+  var now=Date.now(),items=(S.nb||[]).slice().sort(function(a,b){return b.ts-a.ts}),by={stuck:[],animals:[],missing:[],deaths:[],roads:[]},fresh=0;
+  items.forEach(function(i){var c=i.cat||classify(i.t);if(c&&by[c])by[c].push(i);var key=(i.l||i.t);if(!seenN[key]){seenN[key]=1;if(!firstLoad&&i.ts&&now-i.ts<3600000)fresh++}});
+  var top=items.slice(0,8),hot=top.some(function(i){return i.ts&&now-i.ts<900000});
+  var out='<div class="nb has breaking"><h4>🔔 Breaking right now'+(top.length?' <span class="pill">'+top.length+'</span>':'')+'</h4><div class="q">“'+esc(top.length?(hot?'Psst... hot off the wire, hon! Somebody just posted this.':"Here's the latest I've got on the wire."):"Quiet on the wire right now. I'll holler the second something pops. 👀")+'”</div>'+(top.length?'<ul>'+top.map(function(i){return li(i,now)}).join('')+'</ul>':'')+'</div>';
+  out+=CATS.map(function(c){var arr=by[c.k].slice(0,6);
+    return '<div class="nb'+(arr.length?' has':'')+(c.somber?' somber':'')+'"><h4>'+c.e+' '+c.t+(arr.length?' <span class="pill">'+arr.length+'</span>':'')+'</h4><div class="q">“'+esc(arr.length?c.has:c.none)+'”</div>'+(arr.length?'<ul>'+arr.map(function(i){return li(i,now)}).join('')+'</ul>':'')+'</div>';
   }).join('');
-  if(S.news===null)out+='<p class="wxt">The news wire isn\u2019t answering right now, so this is NWS storm reports only.</p>';
   $('#nbBody').innerHTML=out;
-  $('#nbMeta').textContent=total?total+' item'+(total>1?'s':'')+' · news + NWS reports':'all quiet · news + NWS reports';
+  $('#nbMeta').textContent=items.length+' on the wire · peeked '+new Date().toLocaleTimeString([], {hour:'numeric',minute:'2-digit'});
+  if(fresh){var a=document.querySelector('#nav a[data-s=neighbor]');if(a&&!a.classList.contains('act'))a.classList.add('dot')}
+  firstLoad=false;
 }
 
 /* ---------- ORCHESTRATION ---------- */
@@ -647,7 +815,7 @@ var busy=false;
 function refreshAll(){
   if(busy)return;busy=true;$('#btnRefresh').textContent='⟳ Updating…';
   $('#locName').textContent=loc.name;
-  return Promise.all([loadERO(),loadAlerts(),loadWeather().then(loadNeighbors)]).catch(function(){}).then(function(){
+  return Promise.all([loadERO(),loadAlerts(),loadWeather().then(nbGate)]).catch(function(){}).then(function(){
     renderBanner();
     if(S.rows&&S.rows.length&&S.om){renderStats();renderRain(S.om)}
     checkNew();
@@ -656,10 +824,12 @@ function refreshAll(){
 }
 setInterval(function(){tickMeta();if(Date.now()>=nextRefresh)refreshAll()},1000);
 setInterval(function(){if(!busy)loadAlerts()},300000);
+setInterval(function(){if(!document.hidden&&S.cwa&&S.nbLoaded)loadNeighbors()},180000);
 document.addEventListener('visibilitychange',function(){if(!document.hidden&&Date.now()-(S.lastOK?S.lastOK.getTime():0)>600000)refreshAll()});
 
 /* ---------- UI WIRING ---------- */
 $('#btnRefresh').onclick=function(){refreshAll()};
+$('#alertsDet>summary').addEventListener('click',function(){$('#alertsDet').dataset.touched=1});
 $('#btnAlerts').onclick=enableAlerts;
 $('#btnLoc').onclick=function(){var p=$('#locPanel');p.hidden=!p.hidden;if(!p.hidden)$('#q').focus()};
 $('#dayTabs').addEventListener('click',function(e){var b=e.target.closest('.tab');if(!b)return;S.selDay=b.getAttribute('data-d');renderHourly()});
@@ -682,7 +852,7 @@ $('#geo').onclick=function(){
 /* bottom nav highlight */
 (function(){
   var links=[].slice.call(document.querySelectorAll('#nav a')),ids=links.map(function(a){return a.getAttribute('data-s')});
-  function on(){var y=window.scrollY+window.innerHeight*.35,cur=ids[0];ids.forEach(function(id){var el=document.getElementById(id);if(el&&el.getBoundingClientRect().top+window.scrollY<=y)cur=id});links.forEach(function(a){a.classList.toggle('act',a.getAttribute('data-s')===cur)})}
+  function on(){var y=window.scrollY+window.innerHeight*.35,cur=ids[0];ids.forEach(function(id){var el=document.getElementById(id);if(el&&el.getBoundingClientRect().top+window.scrollY<=y)cur=id});links.forEach(function(a){a.classList.toggle('act',a.getAttribute('data-s')===cur)});if(cur==='neighbor'){var nd=document.querySelector('#nav a[data-s=neighbor]');if(nd)nd.classList.remove('dot')}}
   window.addEventListener('scroll',on,{passive:true});on();
 })();
 /* rain canvas */
@@ -726,64 +896,364 @@ $('#geo').onclick=function(){
   }catch(e){}
 })();
 
-/* ---------- live chat (twitch-style, polling) ---------- */
+/* ---------- live chat (square, sticky, layered, filtered, reactions + replies, squad rooms) ---------- */
 (function(){
-  var API=window.ARK_API||'',box=$('#chat'),msgs=$('#chatMsgs'),inp=$('#chatIn'),nm=$('#chatNm'),
-      lastId=0,isOpen=false,unread=0,timer=null,off=false,lastSend=0,
+  var API=window.ARK_API||'',box=$('#chat'),msgs=$('#chatMsgs'),inp=$('#chatIn'),nm=$('#chatNm'),rbar=$('#chatReply'),sendB=$('#chatSend'),
+      lastId=0,isOpen=false,unread=0,timer=null,off=false,lastSend=0,strikes=[],muteUntil=0,reply=null,rx={},mine={},room='all',squad=store.get('ark_squad')||null,
       cid=store.get('ark_cid')||(function(){var v=Math.random().toString(36).slice(2,12)+Math.random().toString(36).slice(2,8);store.set('ark_cid',v);return v})(),
-      name=store.get('ark_name')||'';
+      name=store.get('ark_name')||'',EM=['👍','❤️','😂','😮','😢','🙏'];
   function col(n){var h=0;for(var i=0;i<n.length;i++)h=(h*31+n.charCodeAt(i))>>>0;return 'hsl('+(h%360)+',85%,70%)'}
   function near(){return msgs.scrollHeight-msgs.scrollTop-msgs.clientHeight<60}
-  function add(m,sys){var d=document.createElement('div');if(sys){d.className='sys';d.textContent=m}else{var b=document.createElement('b');b.style.color=col(m.name);b.textContent=m.name;d.appendChild(b);d.appendChild(document.createTextNode(': '+m.msg))}
-    var stick=near();msgs.appendChild(d);while(msgs.children.length>150)msgs.removeChild(msgs.children[1]);if(stick)msgs.scrollTop=msgs.scrollHeight}
+  function put(d){var stick=near();msgs.appendChild(d);while(msgs.children.length>150)msgs.removeChild(msgs.children[1]);if(stick)msgs.scrollTop=msgs.scrollHeight}
+  function sys(m){var d=document.createElement('div');d.className='sys';d.textContent=m;put(d)}
+  function el(id){return msgs.querySelector('.m[data-id="'+id+'"]')}
+  function paint(id){var e=el(id);if(!e)return;var r=e.querySelector('.rx'),c=rx[id]||{};r.textContent='';
+    EM.forEach(function(x){if(c[x]>0){var s=document.createElement('span');s.setAttribute('data-e',x);if(mine[id]===x)s.className='me';s.textContent=x+' '+c[x];r.appendChild(s)}})}
+  function paintAll(){[].forEach.call(msgs.querySelectorAll('.m'),function(e){paint(+e.getAttribute('data-id'))})}
+  function add(m){
+    var d=document.createElement('div');d.className='m';d.setAttribute('data-id',m.id);d.setAttribute('data-name',m.name);d.setAttribute('data-msg',m.msg);
+    if(m.reply_name){var q=document.createElement('div');q.className='q';q.textContent='↪ '+m.reply_name+': '+(m.reply_snip||'');d.appendChild(q)}
+    var line=document.createElement('div'),b=document.createElement('b');b.style.color=col(m.name);b.textContent=m.name;line.appendChild(b);line.appendChild(document.createTextNode(': '+m.msg));d.appendChild(line);
+    var r=document.createElement('div');r.className='rx';d.appendChild(r);put(d);paint(m.id)}
+  function paintPins(ps){var el=$('#chatPins');el.textContent='';el.hidden=!ps.length;ps.forEach(function(p){var d=document.createElement('div'),b=document.createElement('b');b.textContent='📌 '+p.name+': ';d.appendChild(b);d.appendChild(document.createTextNode(p.msg));el.appendChild(d)})}
   function badge(){var b=$('#chatBd');b.hidden=!unread;b.textContent=unread>9?'9+':unread}
-  function online(n){$('#chatOn').textContent=n?'· '+n+' online':'';$('#chatOn2').textContent=n?n+' online':''}
+  function online(n){$('#chatOn').textContent=n?'· '+n+' online':'';$('#chatOn2').textContent=room==='all'?(n?n+' online · public only, no DMs':'public only, no DMs'):'squad members only'}
+  function paintName(){var has=!!name;$('#chatJoin').hidden=has;$('#chatAs').hidden=!has;$('#chatAsName').textContent=has?'Chatting as '+name:'';inp.disabled=!has;sendB.disabled=!has;inp.placeholder=has?'Say something kind':'Create a username first'}
+  function paintTabs(){var t=$('#chatTabs');t.hidden=!squad;if(squad)$('#chatTabSq').textContent=squad.city+' squad';[].forEach.call(t.querySelectorAll('button'),function(b){var r=b.getAttribute('data-r')==='all'?'all':(squad&&squad.slug);b.classList.toggle('on',r===room)})}
+  function switchRoom(target){if(target===room)return;room=target;lastId=0;rx={};mine={};msgs.textContent='';
+    sys(room==='all'?'Public chat only: there are no private messages. Tap a message to react, reply or report.':'Squad chat for '+(squad?squad.city+', '+squad.st:'your area')+'. Only squad members can read and post here.');
+    setReply(null);paintTabs();off=false;poll()}
   function poll(){
     clearTimeout(timer);if(document.hidden||off){timer=setTimeout(poll,10000);return}
-    fetch(API+'/api/chat?after='+lastId,{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(d){
-      if(d.nodb){off=true;add('Chat is warming up. Try again soon.',1);return}
-      (d.msgs||[]).forEach(function(m){var first=lastId===0;if(m.id>lastId)lastId=m.id;add(m);if(!isOpen&&!first&&m.name!==name){unread++}});badge();online(d.online||0);
-      timer=setTimeout(poll,isOpen?3000:20000);
-    }).catch(function(){if(!off){off=true;add('Chat is offline on this page right now.',1)}timer=setTimeout(function(){off=false;poll()},60000)});
+    var rm=room;
+    fetch(API+'/api/chat?after='+lastId+'&cid='+encodeURIComponent(cid)+'&room='+encodeURIComponent(rm),{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(d){
+      if(rm!==room)return;
+      if(d.nodb){off=true;sys('Chat is warming up. Try again soon.');return}
+      (d.msgs||[]).forEach(function(m){var first=lastId===0;if(m.id>lastId)lastId=m.id;add(m);if(!isOpen&&!first&&m.name!==name){unread++}});
+      rx=d.reactions||{};mine=d.mine||{};paintPins(d.pins||[]);paintAll();badge();online(d.online||0);
+      timer=setTimeout(poll,isOpen?3000:30000);
+    }).catch(function(){if(!off){off=true;sys('Chat is offline on this page right now.')}timer=setTimeout(function(){off=false;poll()},60000)});
   }
-  function open(v){isOpen=v;box.classList.toggle('open',v);if(v){unread=0;badge();msgs.scrollTop=msgs.scrollHeight;nm.style.display=name?'none':'block';poll()}}
+  function dock(){document.body.classList.toggle('chatdock',isOpen&&innerWidth>=900)}
+  addEventListener('resize',dock);
+  function open(v){isOpen=v;box.classList.toggle('open',v);dock();store.set('ark_chat_open',v?1:0);if(v){unread=0;badge();msgs.scrollTop=msgs.scrollHeight;poll()}}
   $('#chatBtn').onclick=function(){open(true)};$('#chatX').onclick=function(){open(false)};
-  $('#chatEm').addEventListener('click',function(e){var s=e.target.closest('span');if(s){inp.value+=s.textContent;inp.focus()}});
+  $('#chatTabs').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;var r=b.getAttribute('data-r');switchRoom(r==='all'?'all':(squad?squad.slug:'all'))});
+  window.ArkChat={setSquad:function(sq){squad=sq;if(!sq&&room!=='all'){switchRoom('all')}else if(sq&&room!=='all'&&room!==sq.slug){switchRoom(sq.slug)}paintTabs()},open:function(r){open(true);if(r==='squad'&&squad)switchRoom(squad.slug);var p=$('#chat');p.scrollIntoView&&0}};
+  function setReply(r){reply=r;rbar.classList.toggle('on',!!r);if(r){rbar.firstChild.textContent='Replying to '+r.name+': '+r.snip;inp.focus()}}
+  $('#chatRX').onclick=function(){setReply(null)};
+  function react(id,e){
+    var c=rx[id]||(rx[id]={}),prev=mine[id];
+    if(prev){c[prev]=Math.max(0,(c[prev]||1)-1);if(!c[prev])delete c[prev]}
+    if(prev===e){delete mine[id];e=null}else{mine[id]=e;c[e]=(c[e]||0)+1}
+    paint(id);
+    fetch(API+'/api/chat/react',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({id:id,cid:cid,emoji:e})}).catch(function(){})}
+  msgs.addEventListener('click',function(ev){
+    var t=ev.target,m=t.closest('.m');if(!m)return;var id=+m.getAttribute('data-id');
+    var pill=t.closest('.rx span');if(pill){react(id,pill.getAttribute('data-e'));return}
+    var bt=t.closest('.act button');
+    if(bt){var a=bt.getAttribute('data-a');
+      if(bt.getAttribute('data-e'))react(id,bt.getAttribute('data-e'));
+      else if(a==='reply')setReply({id:id,name:m.getAttribute('data-name'),snip:m.getAttribute('data-msg').slice(0,60)});
+      else if(a==='report'&&confirm('Report this message to the moderator?'))fetch(API+'/api/chat/report',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({id:id,cid:cid})}).then(function(){sys('Thanks, we will take a look.')}).catch(function(){});
+      var o=msgs.querySelector('.act');if(o)o.remove();return}
+    var open=msgs.querySelector('.act');if(open){var host=open.parentNode;open.remove();if(host===m)return}
+    var bar=document.createElement('div');bar.className='act';
+    EM.forEach(function(x){var b=document.createElement('button');b.type='button';b.setAttribute('data-e',x);b.textContent=x;bar.appendChild(b)});
+    var rp=document.createElement('button');rp.type='button';rp.className='t';rp.setAttribute('data-a','reply');rp.textContent='Reply';bar.appendChild(rp);
+    if(m.getAttribute('data-name')!==name){var rt=document.createElement('button');rt.type='button';rt.className='t';rt.setAttribute('data-a','report');rt.textContent='Report';bar.appendChild(rt)}
+    m.appendChild(bar);if(near())msgs.scrollTop=msgs.scrollHeight});
+  function strike(){var n=Date.now();strikes=strikes.filter(function(t){return n-t<600000});strikes.push(n);if(strikes.length>=3){muteUntil=n+300000;sys('Muted for 5 minutes. Please keep chat kind.')}}
+  function join(){var n=nm.value.trim().replace(/[^\w \-'.]/g,'').slice(0,20);
+    if(n.length<2){sys('Usernames need at least 2 letters or numbers.');nm.focus();return}
+    if(badWord(n)){sys('Please create a different username.');return}
+    name=n;store.set('ark_name',name);paintName();inp.focus()}
+  $('#chatJoinBtn').onclick=join;nm.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();join()}});
+  $('#chatChg').onclick=function(){nm.value=name;name='';paintName();nm.focus()};
   $('#chatForm').onsubmit=function(e){
-    e.preventDefault();var m=inp.value.trim();if(!m)return;
-    if(!name){var n=nm.value.trim().replace(/[^\w \-'.]/g,'').slice(0,20);if(n.length<2){nm.style.display='block';nm.focus();return}name=n;store.set('ark_name',name);nm.style.display='none'}
-    if(Date.now()-lastSend<2000){add('Slow down a little, neighbor. 🐢',1);return}
-    lastSend=Date.now();inp.value='';
-    fetch(API+'/api/chat',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({name:name,msg:m,cid:cid})}).then(function(r){
-      if(r.status===429)add('Too fast! Wait a few seconds.',1);else if(r.status===400)add('Message not sent (no links, keep it short and kind).',1);else if(!r.ok)add('Could not send. Try again.',1);poll();
-    }).catch(function(){add('Could not send. Try again.',1)});
+    e.preventDefault();var m=inp.value.trim();if(!m||!name)return;
+    if(Date.now()<muteUntil){sys('You are muted for a few minutes.');return}
+    if(badWord(m)){strike();sys('Blocked: harassment, slurs and threats are not allowed here.');return}
+    if(privateInfo(m)){sys('Blocked: please do not tag people or share personal info.');return}
+    if(Date.now()-lastSend<2000){sys('Slow down a little, neighbor. 🐢');return}
+    lastSend=Date.now();inp.value='';var rt=reply?reply.id:0;setReply(null);
+    fetch(API+'/api/chat',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({name:name,msg:m,cid:cid,reply_to:rt,room:room})}).then(function(r){
+      if(r.status===429)sys('Too fast, or muted. Wait a few minutes.');else if(r.status===403)r.json().then(function(j){sys(j.error==='banned'?'Your chat access was turned off by the moderator.':'Only squad members can post in this room.')}).catch(function(){});else if(r.status===400)sys('Message not sent (filtered, links and personal info are blocked).');else if(!r.ok)sys('Could not send. Try again.');poll();
+    }).catch(function(){sys('Could not send. Try again.')});
   };
-  timer=setTimeout(poll,2500);
+  paintName();paintTabs();
+  var pref=store.get('ark_chat_open');
+  open(pref===1||(pref==null&&innerWidth>=700));
+  timer=setTimeout(poll,6000);
 })();
 
+/* ---------- ZIP code check ---------- */
+function dowOf(d){return new Date(d+'T12:00:00Z').getUTCDay()}
+function addD(d,n){var t=new Date(d+'T12:00:00Z');t.setUTCDate(t.getUTCDate()+n);return t.toISOString().slice(0,10)}
+function hr12(k){var h=+k.slice(11,13),a=h>=12?'PM':'AM';h=h%12||12;return h+' '+a}
+function eroAt(lat,lon){return Promise.all([0,1,2].map(function(i){
+  var u=ERO_URL+'/'+i+'/query?geometry='+lon+','+lat+'&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=outlook&returnGeometry=false&f=json';
+  return J(u).then(function(d){var best=0;(d.features||[]).forEach(function(f){var k=ERO_RANK[String((f.attributes||{}).outlook||'').split(' ')[0].toUpperCase()]||0;if(k>best)best=k});return {rank:best,ok:true}}).catch(function(){return {rank:0,ok:false}})}))}
+function zipCheck(z){
+  var out=$('#zipOut');out.innerHTML='<div class="muted">Checking '+esc(z)+'…</div>';store.set('ark_zip',z);
+  fetch('https://api.zippopotam.us/us/'+z).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(d){
+    var p=d.places&&d.places[0];if(!p)throw 0;var lat=+p.latitude,lon=+p.longitude,name=p['place name']+', '+p['state abbreviation'];
+    return Promise.all([
+      J('https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon+'&hourly=precipitation,precipitation_probability&current=precipitation&precipitation_unit=inch&forecast_days=8&timezone=auto'),
+      J('https://api.weather.gov/alerts/active?point='+lat.toFixed(4)+','+lon.toFixed(4)).catch(function(){return null}),
+      eroAt(lat,lon)
+    ]).then(function(r){zipRender(z,name,lat,lon,r[0],r[1],r[2])});
+  }).catch(function(){out.innerHTML='<div class="err">Could not find that ZIP code, or the data is unavailable right now. Check the 5 digits and try again.</div>'});
+}
+function zipRender(z,name,lat,lon,om,al,ero){
+  var cur=om.current.time,nowKey=cur.slice(0,13)+':00',date=cur.slice(0,10),sun=addD(date,(7-dowOf(date))%7),endKey=sun+'T23:00',h=om.hourly,rows=[],i;
+  for(i=0;i<h.time.length;i++){var k=h.time[i];if(k<nowKey)continue;if(k>endKey)break;rows.push({k:k,p:h.precipitation[i]||0,pop:h.precipitation_probability[i]||0})}
+  var sum=function(n){var s=0;rows.slice(0,n).forEach(function(r){s+=r.p});return s},t6=sum(6),t24=sum(24),tAll=sum(rows.length);
+  var peak=rows.reduce(function(a,r){return r.p>a.p?r:a},{p:0,k:nowKey,pop:0}),wet=rows.filter(function(r){return r.p>=.1}).length;
+  var feats=((al&&al.features)||[]).map(function(f){return f.properties}),crit=feats.some(function(a){return isCrit(a)});
+  var r1=ero[0].rank,lvl=0;
+  if(r1>=3||crit||peak.p>=1.5||t24>=4)lvl=3;else if(r1===2||t24>=2||peak.p>=.75||feats.length)lvl=2;else if(r1===1||t24>=.75||tAll>=2)lvl=1;
+  var LAB=['LOW','WATCH','ELEVATED','HIGH CONCERN'],COL=['#66d17a','#ffe14a','#ff9f1c','#ff4d4d'];
+  var pk=peak.p>0?DAYS[dowOf(peak.k.slice(0,10))]+' '+hr12(peak.k):'none expected';
+  var evs=feats.slice(0,4).map(function(a){return esc(a.event)}).join(', ')+(feats.length>4?' (+'+(feats.length-4)+' more)':'');
+  var eroTxt=ero.map(function(e,j){return 'Day '+(j+1)+' '+(e.ok?(e.rank?ZIP_RISK[e.rank]:'No risk'):'n/a')}).join(' · ');
+  var sentence='Expect about '+f2(t24)+' in of rain in the next 24 hours and '+f2(tAll)+' in through Sunday night'+(peak.p>0?', heaviest around '+pk+' ('+f2(peak.p)+' in/hr)':'')+'. '+(r1?'WPC flash-flood risk today: '+ZIP_RISK[r1]+'. ':'')+(feats.length?feats.length+' active alert'+(feats.length>1?'s':'')+' here.':'No active NWS alerts here right now.');
+  $('#zipOut').innerHTML='<div class="zhead" style="--c:'+COL[lvl]+'"><b>'+esc(z)+' · '+esc(name)+'</b><span class="zv">'+LAB[lvl]+'</span></div>'
+   +'<div class="ztiles"><div><b>'+f2(t6)+'"</b><span>next 6 hours</span></div><div><b>'+f2(t24)+'"</b><span>next 24 hours</span></div><div><b>'+f2(tAll)+'"</b><span>through Sun 11:55 PM</span></div><div><b>'+f2(peak.p)+'"</b><span>peak per hour</span></div></div>'
+   +'<div class="zline">🌊 WPC outlook: '+esc(eroTxt)+'</div>'
+   +'<div class="zline">⏱️ '+wet+' hour'+(wet===1?'':'s')+' of steady rain (0.10 in or more) · highest chance '+Math.max.apply(null,rows.map(function(r){return r.pop}).concat([0]))+'%</div>'
+   +typeLine(feats)+(feats.length?'<div class="zline zbad">🚨 '+evs+'</div>':'<div class="zline">✅ No active NWS alerts at this ZIP</div>')
+   +'<p class="wxt" style="margin:10px 0">'+esc(sentence)+' This uses the ZIP code\'s center point, so it is guidance and not an official forecast. Always follow NWS warnings.</p>'
+   +'<div class="row"><button class="btn primary" id="zipUse" type="button">Use this ZIP for the whole dashboard</button><a class="btn" target="_blank" rel="noopener" href="https://forecast.weather.gov/MapClick.php?lat='+lat.toFixed(3)+'&lon='+lon.toFixed(3)+'">Official NWS forecast ↗</a></div>';
+  $('#zipUse').onclick=function(){setLoc(lat,lon,name,true);window.scrollTo({top:0,behavior:'smooth'})};
+}
+var ZIP_RISK=['No risk','Marginal','Slight','Moderate','High'];
+$('#zipForm').onsubmit=function(e){e.preventDefault();var z=$('#zipIn').value.replace(/\D/g,'').slice(0,5);if(z.length!==5){$('#zipOut').innerHTML='<div class="err">Please enter a 5-digit ZIP code.</div>';return}zipCheck(z)};
+(function(){var z=store.get('ark_zip');if(z)$('#zipIn').value=z;var g=$('#zip');if(!g||!('IntersectionObserver' in window)||!z)return;
+  new IntersectionObserver(function(es,ob){if(es[0].isIntersecting){zipCheck(z);ob.disconnect()}},{rootMargin:'500px'}).observe(g)})();
+
+/* ---------- community: check-ins, squads, flood reports, polls ---------- */
+var COM={d:null,sel:store.get('ark_squad')||null,map:null,layer:null,lf:0,img:null,seen:false,off:false};
+var DEF_SQ=[['Melbourne','FL'],['Palm Bay','FL'],['West Melbourne','FL'],['Cocoa Beach','FL'],['Cocoa','FL'],['Rockledge','FL'],['Titusville','FL'],['Merritt Island','FL'],['Satellite Beach','FL'],['Indialantic','FL'],['Melbourne Beach','FL'],['Viera','FL'],['Sebastian','FL'],['Vero Beach','FL']];
+var CAT_E={road:'🚧',home:'🏠',water:'🌊',power:'⚡',other:'📍'};
+function myCid(){var v=store.get('ark_cid');if(!v){v=Math.random().toString(36).slice(2,12)+Math.random().toString(36).slice(2,8);store.set('ark_cid',v)}return v}
+function cApi(path,body){return fetch((window.ARK_API||'')+path,body?{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)}:{cache:'no-store'}).then(function(r){return r.json().catch(function(){return {}}).then(function(j){j._s=r.status;return j})})}
+function slugOf(c,s){return (c+'-'+s).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
+function area(){var c=S.city,s=S.state;if(!c){var m=String(loc.name||'').match(/^(.+?),\s*([A-Z]{2})$/);if(m){c=m[1];s=m[2]}}return {city:c||'',st:s||'',lat:Math.round(loc.lat*20)/20,lon:Math.round(loc.lon*20)/20}}
+function comArea(){var a=area(),t=a.city?a.city+', '+a.st:(loc.name||'your area');$('#comArea').textContent=t;$('#rpArea').textContent='Area: '+t;fillSquads()}
+function fillSquads(){var sel=$('#sqSel'),a=area(),seen={},opts=[];
+  function add(c,s,n){var k=slugOf(c,s);if(seen[k])return;seen[k]=1;opts.push({c:c,s:s,n:n})}
+  if(a.city)add(a.city,a.st);((COM.d&&COM.d.squads)||[]).forEach(function(q){add(q.city,q.st,q.n)});DEF_SQ.forEach(function(q){add(q[0],q[1])});
+  var cur=sel.value;sel.textContent='';opts.forEach(function(o){var op=document.createElement('option');op.value=o.c+'|'+o.s;op.textContent=o.c+', '+o.s+(o.n?' ('+o.n+')':'');sel.appendChild(op)});if(cur)sel.value=cur}
+function comOff(){COM.off=true;$('#comStatus').hidden=false;$('#comStatus').textContent='Community tools are warming up. They switch on as soon as the live server is connected.';$('#comMeta').textContent='offline'}
+function comLoad(){return cApi('/api/community?cid='+encodeURIComponent(myCid())).then(function(d){
+  if(d._s!==200||!d.checkins){comOff();return}
+  COM.off=false;$('#comStatus').hidden=true;COM.d=d;
+  if(d.mine&&d.mine.squad){COM.sel={slug:d.mine.squad.squad,city:d.mine.squad.city,st:d.mine.squad.st,n:d.mine.squad.n};store.set('ark_squad',COM.sel)}else if(COM.sel){COM.sel=null;store.set('ark_squad',null)}
+  if(window.ArkChat)ArkChat.setSquad(COM.sel);
+  comRender()}).catch(comOff)}
+function comRender(){var d=COM.d;if(!d)return;fillSquads();rCheckin();renderMap();rSquad();rReports();rPolls();rBoard();
+  S.comItems=(d.reports||[]).map(function(r){return {t:(CAT_E[r.cat]||'📍')+' '+r.txt+' · '+r.city+', '+r.st,l:'#community',ts:r.ts,src:'Neighbor report (moderator-approved)',kind:'community',cat:(r.cat==='road'||r.cat==='water')?'roads':null}});
+  if(S.nb){S.nb=S.nb.filter(function(i){return i.kind!=='community'}).concat(S.comItems);renderNeighbor()}}
+function rCheckin(){var d=COM.d,g={},sf=0,hp=0;
+  d.checkins.forEach(function(c){var k=c.city+', '+c.st,o=g[k]||(g[k]={safe:0,help:0});if(c.status==='help'){o.help++;hp++}else{o.safe++;sf++}});
+  var rows=Object.keys(g).sort(function(a,b){return (g[b].safe+g[b].help)-(g[a].safe+g[a].help)}).slice(0,6);
+  $('#cityList').innerHTML=rows.length?rows.map(function(k){return '<div><b>'+esc(k)+'</b> <span class="okc">'+g[k].safe+' safe</span>'+(g[k].help?' <span class="badc">'+g[k].help+' need help</span>':'')+'</div>'}).join(''):'<div class="muted">No check-ins yet. Be the first.</div>';
+  $('#comMeta').textContent=sf+' safe · '+hp+' need help (12h)';
+  var m=d.mine&&d.mine.checkin;$('#ciClear').hidden=!m;if(m)ciMsg(m==='safe'?'You are checked in as safe.':'Your "need help" check-in is showing to neighbors. Call 911 if anyone is in danger.')}
+function ciMsg(t){$('#ciMsg').textContent=t}
+function ciSend(status){var a=area();
+  if(!a.city){ciMsg('Your area is still loading. Try again in a moment.');return}
+  var note=$('#ciNote').value.trim();if(note&&(badWord(note)||privateInfo(note)||/(https?:|www\.)/i.test(note))){ciMsg('Note blocked: no names, addresses, links or rude language please.');return}
+  if(status==='help'&&!confirm('This tells neighbors you need help. It does NOT contact emergency services. If anyone is in danger, call 911. Continue?'))return;
+  cApi('/api/checkin',{cid:myCid(),status:status,city:a.city,st:a.st,lat:a.lat,lon:a.lon,note:note}).then(function(r){
+    if(r.ok){$('#ciNote').value='';ciMsg(status==='safe'?'Thanks, you are checked in as safe for 12 hours.':'Posted for neighbors. Call 911 if anyone is in danger.');comLoad()}
+    else ciMsg(r._s===429?'Please wait a moment before checking in again.':r.error==='filtered'?'Note blocked: no names, addresses or rude language please.':COM.off?'Community tools are warming up. Try again soon.':'Could not check in. Try again.')
+  }).catch(function(){ciMsg('Could not reach the community server yet.')})}
+$('#ciSafe').onclick=function(){ciSend('safe')};$('#ciHelp').onclick=function(){ciSend('help')};
+$('#ciClear').onclick=function(){cApi('/api/checkin',{cid:myCid(),status:'clear'}).then(function(){ciMsg('Your check-in was removed.');comLoad()}).catch(function(){})};
+function ensureLeaflet(cb){if(window.L){cb();return}if(COM.lf)return;COM.lf=1;
+  var l=document.createElement('link');l.rel='stylesheet';l.href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';document.head.appendChild(l);
+  var s=document.createElement('script');s.src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';s.onload=cb;s.onerror=function(){$('#cmap').innerHTML='<div class="muted" style="padding:14px">The map could not load right now. The city list below still works.</div>'};document.head.appendChild(s)}
+function mapInit(){ensureLeaflet(function(){if(COM.map)return;COM.map=L.map('cmap',{scrollWheelZoom:false}).setView([loc.lat,loc.lon],9);
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:12,attribution:'© OpenStreetMap contributors'}).addTo(COM.map);COM.layer=L.layerGroup().addTo(COM.map);
+  setTimeout(function(){COM.map.invalidateSize();renderMap()},250)})}
+function renderMap(){if(!window.L||!COM.map||!COM.d)return;COM.layer.clearLayers();
+  var jit=function(ts,s){return (((ts*s)%97)/97-.5)*0.03};
+  COM.d.checkins.forEach(function(c){var m=L.circleMarker([c.lat+jit(c.ts,1),c.lon+jit(c.ts,3)],{radius:8,color:'#fff',weight:1,fillColor:c.status==='help'?'#ff3d6e':'#3dffb0',fillOpacity:.9}),e=document.createElement('div');e.textContent=(c.status==='help'?'Needs help':'Safe')+' · '+c.city+', '+c.st+' · '+ago(c.ts)+(c.note?' · '+c.note:'');m.bindPopup(e);m.addTo(COM.layer)});
+  COM.d.reports.forEach(function(r){if(r.lat==null)return;var m=L.circleMarker([r.lat+jit(r.ts,5),r.lon+jit(r.ts,7)],{radius:8,color:'#fff',weight:1,fillColor:'#ffc83d',fillOpacity:.95}),e=document.createElement('div');e.textContent=(CAT_E[r.cat]||'📍')+' '+r.txt+' · '+r.city+', '+r.st;m.bindPopup(e);m.addTo(COM.layer)})}
+function rSquad(){var s=COM.sel;$('#sqJoin').hidden=!!s;$('#sqMine').hidden=!s;if(!s)return;
+  $('#sqName').textContent=s.city+', '+s.st+' squad';$('#sqN').textContent=(s.n||1)+' neighbor'+((s.n||1)===1?'':'s');
+  var d=COM.d,city=s.city.toLowerCase(),items=[];
+  d.checkins.filter(function(c){return c.city.toLowerCase()===city&&c.st===s.st}).slice(0,6).forEach(function(c){items.push({ts:c.ts,t:(c.status==='help'?'🆘 A neighbor needs help':'✅ A neighbor checked in safe')+(c.note?': '+c.note:'')})});
+  d.reports.filter(function(r){return r.city.toLowerCase()===city&&r.st===s.st}).forEach(function(r){items.push({ts:r.ts,t:(CAT_E[r.cat]||'📍')+' '+r.txt})});
+  (S.nb||[]).filter(function(i){return i.kind!=='community'&&(i.t||'').toLowerCase().indexOf(city)>=0}).slice(0,4).forEach(function(i){items.push({ts:i.ts||0,t:'📡 '+i.t.slice(0,160)})});
+  items.sort(function(a,b){return b.ts-a.ts});
+  var ul=$('#sqFeed');ul.textContent='';
+  if(!items.length){var li0=document.createElement('li');li0.className='muted';li0.textContent='Quiet in your squad right now. Check in or send a report to get it going.';ul.appendChild(li0);return}
+  items.slice(0,8).forEach(function(i){var li=document.createElement('li');li.textContent=i.t+(i.ts?' · '+ago(i.ts):'');ul.appendChild(li)})}
+function joinSquad(){var v=$('#sqCustom').value.trim(),c,s;
+  if(v){var m=v.match(/^([A-Za-z .'-]{2,40}),\s*([A-Za-z]{2})$/);if(!m){$('#sqMsg').textContent='Type it like: Palm Bay, FL';return}c=m[1].trim();s=m[2].toUpperCase()}
+  else{var p=($('#sqSel').value||'').split('|');c=p[0];s=p[1]}
+  if(!c||!s)return;
+  cApi('/api/squad/join',{cid:myCid(),city:c,st:s}).then(function(r){
+    if(r.ok){COM.sel={slug:r.squad,city:c,st:s,n:r.n};store.set('ark_squad',COM.sel);$('#sqMsg').textContent='';$('#sqCustom').value='';if(window.ArkChat)ArkChat.setSquad(COM.sel);comLoad()}
+    else $('#sqMsg').textContent=COM.off?'Community tools are warming up. Try again soon.':'Could not join that squad. Check the city and state.'
+  }).catch(function(){$('#sqMsg').textContent='Could not reach the community server yet.'})}
+$('#sqBtn').onclick=joinSquad;
+$('#sqLeave').onclick=function(){cApi('/api/squad/join',{cid:myCid(),leave:true}).then(function(){COM.sel=null;store.set('ark_squad',null);if(window.ArkChat)ArkChat.setSquad(null);comLoad()}).catch(function(){})};
+$('#sqChat').onclick=function(){if(window.ArkChat)ArkChat.open('squad')};
+function rReports(){var el=$('#rpList'),api=window.ARK_API||'',list=COM.d.reports||[];
+  if(!list.length){el.innerHTML='<div class="muted">No approved reports in the last 24 hours.</div>';return}
+  el.innerHTML=list.map(function(r){return '<div class="rp"><div><b>'+(CAT_E[r.cat]||'📍')+' '+esc(r.city)+', '+esc(r.st)+'</b> <span class="muted">· '+esc(ago(r.ts))+' · moderator-approved</span></div><div>'+esc(r.txt)+'</div>'
+    +(r.has_img?'<img loading="lazy" decoding="async" alt="Photo from a neighbor report" src="'+esc(api)+'/api/report/img?id='+(+r.id)+'">':'')
+    +(r.vid&&/^https:\/\//.test(r.vid)?'<div><a href="'+esc(r.vid)+'" target="_blank" rel="noopener noreferrer">▶ Watch video ↗</a></div>':'')+'</div>'}).join('')}
+function rpMsg(t,bad){var m=$('#rpMsg');m.textContent=t;m.className=bad?'badc':'okc'}
+$('#rpImg').onchange=function(){var f=this.files&&this.files[0];if(!f)return;
+  if(!/^image\//.test(f.type)){rpMsg('Please choose a photo.',1);return}
+  var url=URL.createObjectURL(f),im=new Image();
+  im.onload=function(){var sc=Math.min(1,720/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*sc);c.height=Math.round(im.height*sc);c.getContext('2d').drawImage(im,0,0,c.width,c.height);
+    var q=.6,u=c.toDataURL('image/jpeg',q);while(u.length>150000&&q>.3){q-=.1;u=c.toDataURL('image/jpeg',q)}URL.revokeObjectURL(url);
+    if(u.length>160000){rpMsg('That photo is too large. Try another one.',1);return}COM.img=u;$('#rpPrev').src=u;$('#rpPrev').hidden=false;rpMsg('Photo added. Location data in the photo is removed.',0)};
+  im.onerror=function(){rpMsg('That photo could not be read.',1)};im.src=url};
+$('#rpForm').onsubmit=function(e){e.preventDefault();var a=area(),txt=$('#rpTxt').value.trim(),vid=$('#rpVid').value.trim();
+  if(!a.city){rpMsg('Your area is still loading. Try again in a moment.',1);return}
+  if(txt.length<10){rpMsg('Please write at least 10 characters about what you see.',1);return}
+  if(badWord(txt)||privateInfo(txt)||/(https?:|www\.)/i.test(txt)){rpMsg('Blocked: no addresses, phone numbers, links or rude language please.',1);return}
+  if(vid&&!/^https:\/\/(www\.|m\.)?(youtube\.com|youtu\.be|facebook\.com|fb\.watch|tiktok\.com|instagram\.com)\//i.test(vid)){rpMsg('Video links must be https links from YouTube, Facebook, TikTok or Instagram.',1);return}
+  cApi('/api/report',{cid:myCid(),name:store.get('ark_name')||'Neighbor',city:a.city,st:a.st,lat:a.lat,lon:a.lon,cat:$('#rpCat').value,txt:txt,img:COM.img||undefined,vid:vid||undefined}).then(function(r){
+    if(r.ok){$('#rpTxt').value='';$('#rpVid').value='';COM.img=null;$('#rpPrev').hidden=true;$('#rpImg').value='';rpMsg('Thank you! A moderator will review it. Approved reports appear in the Nosy Neighbor feed and on the map.',0)}
+    else rpMsg(r._s===429?'You have sent a few reports already. Please try again later.':COM.off?'Community tools are warming up. Try again soon.':r.error==='filtered'?'Blocked: no addresses, links or rude language please.':'Could not send the report. Try again.',1)
+  }).catch(function(){rpMsg('Could not reach the community server yet.',1)})};
+function rPolls(){var el=$('#polls'),d=COM.d,v=(d.mine&&d.mine.votes)||{};
+  if(!(d.polls||[]).length){el.innerHTML='<div class="muted">No polls right now. New predictions are posted during active weather.</div>';return}
+  el.innerHTML=d.polls.map(function(p){var total=p.counts.reduce(function(a,b){return a+b},0),open=p.truth===null&&Date.now()<p.closes,my=v[p.id],done=p.truth!==null;
+    var st=done?'Resolved':open?'Open until '+new Date(p.closes).toLocaleString([], {weekday:'short',hour:'numeric',minute:'2-digit'}):'Closed, waiting for the result';
+    return '<div class="poll"><b>'+esc(p.q)+'</b><div class="muted" style="font-size:12px;margin:2px 0 6px">'+esc(st)+' · '+total+' vote'+(total===1?'':'s')+'</div>'
+     +p.opts.map(function(o,i){
+       if(open&&my==null)return '<button class="btn popt" type="button" data-p="'+(+p.id)+'" data-c="'+i+'">'+esc(o)+'</button>';
+       var pc=total?Math.round(100*p.counts[i]/total):0;
+       return '<div class="pbar'+(my===i?' mine':'')+(done&&p.truth===i?' win':'')+'"><div class="pf" style="width:'+pc+'%"></div><span>'+(done&&p.truth===i?'✓ ':'')+esc(o)+(my===i?' (your pick)':'')+'</span><b>'+pc+'%</b></div>'}).join('')+'</div>'}).join('')}
+$('#polls').addEventListener('click',function(e){var b=e.target.closest('.popt');if(!b)return;
+  cApi('/api/poll/vote',{cid:myCid(),name:store.get('ark_name')||'Neighbor',poll:+b.getAttribute('data-p'),choice:+b.getAttribute('data-c')}).then(function(){comLoad()}).catch(function(){})});
+function rBoard(){var b=COM.d.board||[],el=$('#board');
+  if(!b.length){el.innerHTML='<div class="muted">No resolved predictions yet. Vote on a poll, then check back when it is settled.</div>';return}
+  el.innerHTML='<table class="lb">'+b.map(function(r,i){return '<tr><td>'+(i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1))+'</td><td>'+esc(r.name||'Neighbor')+'</td><td class="n">'+r.pts+' correct</td></tr>'}).join('')+'</table>'}
+(function(){var g=$('#community');if(!g||!('IntersectionObserver' in window)){comArea();comLoad();return}
+  new IntersectionObserver(function(es,ob){if(es[0].isIntersecting){COM.seen=true;comArea();comLoad();ob.disconnect()}},{rootMargin:'600px'}).observe(g);
+  var m=$('#cmap');new IntersectionObserver(function(es,ob){if(es[0].isIntersecting){mapInit();ob.disconnect()}},{rootMargin:'300px'}).observe(m)})();
+setInterval(function(){if(COM.seen&&!document.hidden)comLoad()},60000);
+
+/* ---------- Flood Watch vs Flood Warning vs Flash Flood Warning ---------- */
+var ATYPES=[
+ {k:'watch',t:'Flood Watch',re:/^(Flash )?Flood Watch$/i,c:'#ffe14a',e:'👀',m:'Flooding is POSSIBLE. Conditions are favorable, but it has not started yet.',d:'Get ready: know your route, move valuables up, charge phones, keep watching.'},
+ {k:'warn',t:'Flood Warning',re:/^Flood Warning$/i,c:'#ff9f1c',e:'⚠️',m:'Flooding is happening or about to happen, often along rivers and creeks that rise over hours to days.',d:'Move to higher ground if you are near water. Avoid flooded roads.'},
+ {k:'flash',t:'Flash Flood Warning',re:/^Flash Flood (Warning|Emergency)$/i,c:'#ff3d6e',e:'🚨',m:'Dangerous flooding is happening NOW or within minutes to hours. This is the most urgent kind.',d:'Go to higher ground right away. Never drive or walk through floodwater.'}
+];
+function renderAlertTypes(){
+  var el=$('#alertTypes');if(!el)return;
+  el.innerHTML=ATYPES.map(function(t){
+    var hits=S.alOK?S.alerts.filter(function(a){return t.re.test(a.event||'')}):[],on=hits.length>0;
+    return '<div class="at'+(on?' on':'')+(on&&t.k==='flash'?' pulse':'')+'" style="--c:'+t.c+'"><div class="ah"><b>'+t.e+' '+t.t+'</b><span class="ab">'+(!S.alOK?'checking…':on?'ACTIVE'+(hits.length>1?' ×'+hits.length:''):'none now')+'</span></div><div class="am">'+t.m+'</div><div class="ad">'+(on?'Until '+esc(fmtT(hits[0].ends||hits[0].expires))+'. ':'')+t.d+'</div></div>'}).join('')}
+function typeLine(feats){return '<div class="zline">'+ATYPES.map(function(t){var n=feats.filter(function(a){return t.re.test(a.event||'')}).length;return t.e+' '+t.t+': <b>'+(n?'ACTIVE':'none')+'</b>'}).join(' · ')+'</div>'}
+renderAlertTypes();
+
+/* ---------- Chicken Crossing mini game ---------- */
+var G={cv:$('#gcv'),ctx:null,rows:[],cx:3,cy:0,cam:0,score:0,secs:1,best:store.get('ark_gbest')||0,state:'idle',t0:0,last:0,raf:0,vis:false,COLS:7,VR:9,CW:44,hopAt:0};
+function gRow(y){
+  if(y===0||y%6===0||(y>6&&Math.random()<.12))return {t:'g'};
+  var d=Math.random()<.5?1:-1,sp=(1.3+Math.random()*1.5)*(1+Math.min(y,80)/80)*(y<=3?.7:1),n=y<=3?2:2+(Math.random()<.5?1:0),cars=[],span=G.COLS+6,i;
+  for(i=0;i<n;i++){var bus=Math.random()<.22,w=bus?1.7:1.05;cars.push({x:(span/n)*i+Math.random()*1.5-3,w:w,e:bus?'🚌':['🚗','🚙','🚕','🛻'][Math.floor(Math.random()*4)]})}
+  return {t:'r',d:d,sp:sp,cars:cars}}
+function gMsg(h){$('#gMsg').innerHTML=h}
+function gReset(){G.rows=[];for(var i=0;i<G.VR+4;i++)G.rows.push(gRow(i));G.cx=3;G.cy=0;G.cam=0;G.score=0;G.state='idle';gMsg('Tap ▲ to start');gDraw()}
+function gEnsure(){while(G.rows.length<G.cy+G.VR+4)G.rows.push(gRow(G.rows.length))}
+function gHit(){var r=G.rows[G.cy];if(!r||r.t!=='r')return;
+  for(var i=0;i<r.cars.length;i++){var c=r.cars[i];if(G.cx+.85>c.x+.1&&G.cx+.15<c.x+c.w-.1){gDie();return}}}
+function gHop(dx,dy){
+  if(G.state==='over')return;var now=performance.now();if(now-G.hopAt<70)return;G.hopAt=now;
+  if(G.state==='idle'){G.state='run';G.t0=now;G.last=0;gMsg('');if(!G.raf)G.raf=requestAnimationFrame(gLoop)}
+  var nx=G.cx+dx,ny=G.cy+dy;if(nx<0||nx>=G.COLS||ny<G.cam)return;
+  G.cx=nx;G.cy=ny;if(ny>G.score)G.score=ny;G.cam=Math.max(G.cam,G.cy-1);gEnsure();gHit();gDraw()}
+function gLoop(t){
+  G.raf=0;var dt=Math.min(.05,(t-(G.last||t))/1000);G.last=t;
+  if(G.state==='run'){
+    var span=G.COLS+6;
+    G.rows.forEach(function(r,y){if(r.t!=='r'||y<G.cam-1||y>G.cam+G.VR+1)return;r.cars.forEach(function(c){c.x+=r.d*r.sp*dt;if(r.d>0&&c.x>G.COLS+3)c.x-=span;if(r.d<0&&c.x<-3-c.w)c.x+=span})});
+    gHit()}
+  gDraw();
+  if(G.state==='run'&&G.vis&&!document.hidden)G.raf=requestAnimationFrame(gLoop)}
+function gDraw(){
+  if(!G.ctx)return;var c=G.ctx,W=G.COLS*G.CW,H=G.VR*G.CW,i;c.textAlign='center';c.textBaseline='middle';
+  for(i=0;i<G.VR;i++){
+    var y=G.cam+i,row=G.rows[y]||{t:'g'},py=H-(i+1)*G.CW;
+    c.fillStyle=row.t==='g'?((y%2)?'#2f7d3a':'#2a6f34'):'#3a3f4f';c.fillRect(0,py,W,G.CW);
+    if(row.t==='r'){
+      c.fillStyle='rgba(255,255,255,.3)';for(var k=0;k<W;k+=28)c.fillRect(k,py+G.CW-2,14,2);
+      row.cars.forEach(function(car){c.save();c.font=Math.round(car.w*G.CW*.82)+'px serif';c.translate((car.x+car.w/2)*G.CW,py+G.CW/2+2);if(row.d>0)c.scale(-1,1);c.fillText(car.e,0,0);c.restore()})}
+    else if(y>0&&y%6===0){c.font='18px serif';c.fillText('🌾',20,py+G.CW/2);c.fillText('🌾',W-20,py+G.CW/2)}
+  }
+  c.font='30px serif';c.fillText(G.state==='over'?'💥':'🐔',G.cx*G.CW+G.CW/2,H-(G.cy-G.cam+1)*G.CW+G.CW/2+2);
+  c.font='800 16px system-ui,sans-serif';c.fillStyle='rgba(0,0,0,.55)';c.fillRect(6,6,86,26);c.fillStyle='#fff';c.textAlign='left';c.fillText('Score '+G.score,12,20);c.textAlign='center'}
+function gDie(){
+  if(G.state!=='run')return;G.state='over';G.secs=Math.max(1,(performance.now()-G.t0)/1000);gDraw();
+  var nb=G.score>G.best;if(nb){G.best=G.score;store.set('ark_gbest',G.best)}$('#gBest').textContent='Best: '+G.best;
+  gMsg('Splat! 💥<br>You hopped '+G.score+' row'+(G.score===1?'':'s')+(nb?'<br>New personal best!':'')+'<br><button class="btn primary" id="gAgain" type="button">Play again</button>');gSubmit()}
+function gSubmit(){
+  if(G.score<1)return;var name=store.get('ark_name');
+  if(!name){$('#gName').hidden=false;return}
+  $('#gName').hidden=true;
+  cApi('/api/game/score',{cid:myCid(),name:name,score:G.score,secs:Math.max(1,Math.round(G.secs))}).then(function(r){if(r.ok)gLoad();else if(r.error==='banned')$('#gMine').textContent='Your leaderboard access was turned off by the moderator.'}).catch(function(){})}
+function gTable(rows){return rows.length?'<table class="lb">'+rows.map(function(r,i){return '<tr><td>'+(i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1))+'</td><td>'+esc(r.name)+'</td><td class="n">'+r.best+' rows</td></tr>'}).join('')+'</table>':'<div class="muted">No scores yet. Be the first to cross!</div>'}
+function gOff(){var t='<div class="muted">The leaderboard opens when the live server is connected. You can still play and keep your personal best.</div>';$('#gBoard1').innerHTML=t;$('#gBoard2').innerHTML=t}
+function gLoad(){return cApi('/api/game/board?cid='+encodeURIComponent(myCid())).then(function(d){
+  if(d._s!==200||!d.board){gOff();return}
+  $('#gBoard1').innerHTML=gTable(d.board.slice(0,5));$('#gBoard2').innerHTML=gTable(d.board);
+  $('#gMine').textContent=d.mine?'Your best on the board: '+d.mine.best+' (rank #'+d.mine.rank+')':''}).catch(gOff)}
+(function(){
+  if(!G.cv)return;G.ctx=G.cv.getContext('2d');gReset();$('#gBest').textContent=G.best?'Best: '+G.best:'';
+  var on=function(id,dx,dy){$(id).addEventListener('pointerdown',function(e){e.preventDefault();gHop(dx,dy)})};
+  on('#gL',-1,0);on('#gR',1,0);on('#gU',0,1);on('#gD',0,-1);
+  $('#gMsg').addEventListener('click',function(e){if(e.target.id==='gAgain')gReset()});
+  document.addEventListener('keydown',function(e){if(!G.vis)return;var t=(e.target.tagName||'').toLowerCase();if(t==='input'||t==='textarea')return;
+    var m={ArrowUp:[0,1],w:[0,1],ArrowLeft:[-1,0],a:[-1,0],ArrowRight:[1,0],d:[1,0],ArrowDown:[0,-1],s:[0,-1]}[e.key];if(m){e.preventDefault();gHop(m[0],m[1])}});
+  var sx=0,sy=0;
+  G.cv.addEventListener('touchstart',function(e){var t=e.touches[0];sx=t.clientX;sy=t.clientY},{passive:true});
+  G.cv.addEventListener('touchend',function(e){var t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;
+    if(Math.abs(dx)<20&&Math.abs(dy)<20)gHop(0,1);else if(Math.abs(dx)>Math.abs(dy))gHop(dx>0?1:-1,0);else gHop(0,dy<0?1:-1)},{passive:true});
+  $('#gName').onsubmit=function(e){e.preventDefault();var n=$('#gNm').value.trim().replace(/[^\w \-'.]/g,'').slice(0,20);if(n.length<2||badWord(n)){$('#gMine').textContent='Please create a different username.';return}store.set('ark_name',n);$('#gName').hidden=true;gSubmit()};
+  if('IntersectionObserver' in window)new IntersectionObserver(function(es){G.vis=es[0].isIntersecting;if(G.vis&&G.state==='run'&&!G.raf){G.last=0;G.raf=requestAnimationFrame(gLoop)}},{threshold:.15}).observe(G.cv);else G.vis=true;
+  setTimeout(gLoad,1500);setInterval(function(){if(!document.hidden)gLoad()},120000);
+})();
+
+/* neighbor lazy-load: first fetch when the section is near the screen (or after 7 s idle) */
+(function(){var g=$('#neighbor');if(!g||!('IntersectionObserver' in window))return;
+  new IntersectionObserver(function(es,ob){if(es[0].isIntersecting){nbSeen=true;if(S.cwa&&!S.nbLoaded)nbGo();ob.disconnect()}},{rootMargin:'700px'}).observe(g)})();
 /* maps lazy-load */
 (function(){var g=$('#mapGrid');if(!('IntersectionObserver' in window)){mapsVisible=true;if(mapsStale&&S.rows)paintMaps();return}
   new IntersectionObserver(function(es){mapsVisible=es[0].isIntersecting;if(mapsVisible&&mapsStale&&S.station!==null)paintMaps()},{rootMargin:'400px'}).observe(g)})();
 /* TV: click-to-load, auto-unload */
 (function(){
-  var YT='https://www.youtube.com/embed/',V={live:YT+'live_stream?channel=UCuXT13wiqK56NR7QSfDWpvg',247:YT+'8FOpii0O2mU'},cur='247',box=$('#tv'),playBtn=$('#tvPlay'),stop=$('#tvStop'),idle=null,pre=false;
+  var YT='https://www.youtube.com/embed/',V={live:YT+'live_stream?channel=UCuXT13wiqK56NR7QSfDWpvg',247:YT+'8FOpii0O2mU'},cur='247',box=$('#tv'),playBtn=$('#tvPlay'),stop=$('#tvStop'),idle=null,pre=false,um=$('#tvUnmute');
   function preconnect(){if(pre)return;pre=true;['https://www.youtube.com','https://i.ytimg.com','https://googleads.g.doubleclick.net'].slice(0,2).forEach(function(u){var l=document.createElement('link');l.rel='preconnect';l.href=u;document.head.appendChild(l)})}
   playBtn.addEventListener('pointerenter',preconnect,{once:true});playBtn.addEventListener('touchstart',preconnect,{once:true,passive:true});
   function play(){
     unload(true);
     var f=document.createElement('iframe');
-    f.src=V[cur]+(V[cur].indexOf('?')>-1?'&':'?')+'autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1';
+    f.src=V[cur]+(V[cur].indexOf('?')>-1?'&':'?')+'autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1&enablejsapi=1'+(/^https?:/.test(location.protocol)?'&origin='+encodeURIComponent(location.origin):'');
     f.title='FOX 35 Orlando live video';f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';f.allowFullscreen=true;f.referrerPolicy='strict-origin-when-cross-origin';
-    box.appendChild(f);playBtn.hidden=true;stop.hidden=false;document.body.classList.add('vid-on');
+    box.appendChild(f);playBtn.hidden=true;stop.hidden=true;um.hidden=false;document.body.classList.add('vid-on');
   }
-  function unload(keep){var f=box.querySelector('iframe');if(f)f.remove();playBtn.hidden=false;stop.hidden=true;document.body.classList.remove('vid-on');clearTimeout(idle)}
+  function unload(keep){var f=box.querySelector('iframe');if(f)f.remove();playBtn.hidden=false;um.hidden=true;stop.hidden=true;document.body.classList.remove('vid-on');clearTimeout(idle)}
   function arm(){clearTimeout(idle);idle=setTimeout(function(){if(box.querySelector('iframe'))unload()},20000)}
   playBtn.onclick=play;stop.onclick=function(){unload()};
+  um.onclick=function(){var f=box.querySelector('iframe');if(!f||!f.contentWindow)return;var w=f.contentWindow,send=function(fn,a){w.postMessage(JSON.stringify({event:'command',func:fn,args:a||[]}),'https://www.youtube.com')};send('unMute');send('setVolume',[100]);send('playVideo');um.hidden=true};
   $('#tvTabs').addEventListener('click',function(e){var b=e.target.closest('.tab');if(!b)return;cur=b.getAttribute('data-v');[].forEach.call($('#tvTabs').children,function(t){t.setAttribute('aria-selected',t===b)});if(box.querySelector('iframe'))play()});
   var offscreen=false,hidden=false;
-  function chk(){if(offscreen||hidden)arm();else clearTimeout(idle)}
+  function chk(){if(offscreen||hidden)arm();else{clearTimeout(idle);if(!box.querySelector('iframe'))play()}}
   if('IntersectionObserver' in window)new IntersectionObserver(function(es){offscreen=!es[0].isIntersecting;chk()},{threshold:.05}).observe(box);
   document.addEventListener('visibilitychange',function(){hidden=document.hidden;chk()});
+  setTimeout(function(){if(!box.querySelector('iframe')&&!document.hidden)play()},800);
 })();
 
 $('#locName').textContent=loc.name;
