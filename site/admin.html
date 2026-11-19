@@ -1,69 +1,103 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"><script>/* Set to the Worker URL when this page is hosted elsewhere (e.g. Netlify). Empty = same origin. */window.ARK_API="https://noahs-ark-retruns.fastbitcoin12.workers.dev";</script><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Ark Admin</title>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
+<title>Ark Admin · NOAH'S ARK RETURNS</title>
 <style>
-:root{--ink:#050816;--deep:#0a1230;--gold:#ffc23d;--rain:#35e0ff;--alert:#ff3d6e;--ok:#3dffb0;--text:#eaf1ff;--muted:#9db0d8;--card:rgba(20,30,70,.7);--line:rgba(120,160,255,.25)}
-*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:var(--text);background:radial-gradient(1100px 600px at 50% -10%,#26357d,var(--deep) 45%,var(--ink)) fixed;min-height:100vh}
-.w{max-width:1000px;margin:0 auto;padding:16px 14px 50px}h1{font-size:22px;margin:6px 0 2px;color:var(--gold)}h2{font-size:16px;margin:0 0 10px;color:var(--gold)}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin:0 0 14px}
-.login{max-width:380px;margin:12vh auto}input{width:100%;font:16px system-ui;padding:13px;border-radius:12px;border:1px solid var(--line);background:rgba(0,0,0,.35);color:var(--text);margin:8px 0}
-button{font:700 15px system-ui;padding:12px 16px;border:0;border-radius:12px;background:linear-gradient(90deg,var(--gold),#ff8a2a);color:#2a1300;cursor:pointer;min-height:44px}
-button.g{background:rgba(255,255,255,.08);color:var(--text);border:1px solid var(--line)}button.sel{background:var(--gold);color:#2a1300}
-.err{color:#ffb3c4;font-size:14px;min-height:20px}.muted{color:var(--muted);font-size:13px}
-.top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}.row{display:flex;gap:8px;flex-wrap:wrap}
-.k{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:12px 0}@media(min-width:760px){.k{grid-template-columns:repeat(4,1fr)}}
-.t{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px}.t b{display:block;font-size:26px;color:var(--rain);margin-top:4px}.t span{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700}.t small{color:var(--muted);font-size:12px}
-table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:8px 6px;border-top:1px solid var(--line)}th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em;border-top:0}td.n,th.n{text-align:right}
-.bar{height:8px;border-radius:6px;background:rgba(255,255,255,.08);overflow:hidden;min-width:60px}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--rain),#6a8bff)}
-.sc{overflow-x:auto}.chart{display:flex;align-items:flex-end;gap:4px;height:150px;min-width:100%;padding-top:10px}.col{flex:1;min-width:18px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}.col i{display:block;width:100%;border-radius:5px 5px 0 0;background:linear-gradient(180deg,var(--gold),#ff8a2a)}.col em{font-style:normal;font-size:10px;color:var(--muted);margin-top:4px;white-space:nowrap}.col u{text-decoration:none;font-size:10px;color:var(--text)}
-.live{color:var(--ok);font-weight:800}.pill{padding:2px 8px;border-radius:99px;background:rgba(61,255,176,.15);color:var(--ok);font-size:11px;font-weight:700}
-.grid{display:grid;gap:14px}@media(min-width:800px){.grid{grid-template-columns:1fr 1fr}}
-</style></head><body><div class="w">
-<div id="login" class="card login"><h1>🔒 Ark Admin</h1><div class="muted">Enter the admin password to see visitor stats.</div>
-<form id="f"><input id="pw" type="password" autocomplete="current-password" placeholder="Password" required><div class="err" id="e"></div><button type="submit" style="width:100%">Sign in</button></form></div>
+:root{--bg:#0b1020;--card:#141b34;--line:#26305a;--txt:#eef2ff;--mut:#9aa6d0;--gold:#ffc83d;--ok:#3dffb0;--bad:#ff3d6e}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;padding:14px;max-width:1100px;margin:0 auto}
+h1{font-size:20px;margin:6px 0 14px;color:var(--gold)}h2{font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin:22px 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+input,select,button{font:inherit;border-radius:10px;border:1px solid var(--line);background:#0e1430;color:var(--txt);padding:10px 12px;min-height:44px}
+button{cursor:pointer;background:linear-gradient(135deg,var(--gold),#ff8a2a);color:#2a1300;font-weight:800;border:0}button.s{background:#26305a;color:var(--txt);font-weight:600}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}.kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px}
+.kpi b{display:block;font-size:26px;color:var(--gold)}.kpi span{color:var(--mut);font-size:12px}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--mut);font-weight:600}.n{text-align:right}
+.wrap{overflow-x:auto}.bar{height:8px;border-radius:6px;background:linear-gradient(90deg,var(--gold),#ff8a2a)}
+.err{color:var(--bad)}.mut{color:var(--mut)}.hid{opacity:.45}
+.spark{display:flex;align-items:flex-end;gap:3px;height:90px}.spark div{flex:1;background:linear-gradient(180deg,var(--gold),#ff8a2a);border-radius:3px 3px 0 0;min-height:2px}
+</style></head><body>
+<h1>⛈️ Ark Admin</h1>
+<div id="login" class="card"><form id="lf" class="row"><input id="pw" type="password" placeholder="Admin password" autocomplete="current-password" aria-label="Admin password" style="flex:1;min-width:200px"><button type="submit">Sign in</button></form><p id="lerr" class="err" style="margin:8px 0 0"></p></div>
 <div id="app" hidden>
-<div class="top"><div><h1>⚓ NOAH'S ARK RETRUNS · Admin</h1><div class="muted" id="upd">Loading…</div></div>
-<div class="row"><button class="g" data-d="1">24 hours</button><button class="g sel" data-d="7">7 days</button><button class="g" data-d="30">30 days</button><button class="g" data-d="90">90 days</button><button class="g" id="out">Sign out</button></div></div>
-<div class="k" id="k"></div>
-<div class="card"><h2>Visits per day</h2><div class="sc"><div class="chart" id="chart"></div></div><div class="muted" style="margin-top:8px">Bar height = visits. Number above bar = page views.</div></div>
-<div class="grid"><div class="card"><h2>📱 Where visitors came from (social)</h2><div id="plat"></div></div>
-<div class="card"><h2>📍 City &amp; state</h2><div id="loc"></div></div></div>
-<div class="card"><h2>💬 Chat moderation</h2><div class="sc" id="chatmod"></div></div>
-<div class="card"><h2>🕒 Latest visits</h2><div class="sc" id="recent"></div></div>
-<div class="muted">Visit = one browsing session (30 min idle ends it). Page views = page loads plus each bottom-menu tap. Engagement rate = visits that lasted 10+ seconds or viewed 2+ pages. Social source comes from the referring link, in-app browser or a ?src= tag. Tip: share links like <b>…workers.dev/?src=facebook</b> to track a specific post. No IP addresses are stored.</div>
-</div></div>
+  <div class="row"><select id="days" aria-label="Date range"><option value="1">Last 24 hours</option><option value="7" selected>Last 7 days</option><option value="30">Last 30 days</option><option value="90">Last 90 days</option></select><button class="s" id="rf" type="button">Refresh</button><button class="s" id="out" type="button">Sign out</button><span class="mut" id="upd"></span></div>
+  <h2>Overview</h2><div class="kpis" id="kpis"></div>
+  <h2>Visits over time</h2><div class="card"><div class="spark" id="spark"></div><div class="mut" id="sparkL" style="font-size:12px;margin-top:6px"></div></div>
+  <h2>Where visitors come from (platform)</h2><div class="card wrap"><table id="plat"></table></div>
+  <h2>Top cities and states</h2><div class="card wrap"><table id="loc"></table></div>
+  <h2>Latest visitors</h2><div class="card wrap"><table id="recent"></table></div>
+  <h2>Chat moderation</h2><div class="card wrap"><table id="chat"></table></div>
+  <h2>Pinned messages (top of chat for everyone)</h2>
+  <div class="card"><form id="pinF" class="row"><input id="pinT" maxlength="200" placeholder="Write an announcement to pin (the newest 3 stay pinned)" style="flex:1;min-width:220px" aria-label="Announcement"><button type="submit">Pin announcement</button></form><p class="mut" style="font-size:12px;margin:6px 0">You can also pin any chat message with the Pin button in the table above.</p><div id="pins"></div></div>
+  <h2>Banned chatters</h2><div class="card" id="bans"></div>
+  <p class="mut" style="font-size:12px">A ban blocks that device and that username from chat, check-ins, reports, votes and the game, and hides their messages. No IP addresses are stored, so a determined person can get around it by changing device or clearing the browser.</p>
+  <h2>Flood reports waiting for approval</h2><div class="card" id="pend"><span class="mut">Loading…</span></div>
+  <h2>Polls and predictions</h2>
+  <div class="card"><form id="pf" class="row"><input id="pq" maxlength="120" placeholder="Question, e.g. Will the Indian River crest above 5 ft?" style="flex:1;min-width:220px" aria-label="Poll question"><input id="po" maxlength="170" placeholder="Options separated by | (2 to 4)" style="flex:1;min-width:200px" aria-label="Poll options"><select id="ph" aria-label="Open for"><option value="6">Open 6 hours</option><option value="24" selected>Open 24 hours</option><option value="72">Open 3 days</option></select><button type="submit">Create poll</button></form><p id="pmsg" class="mut" style="margin:8px 0 0"></p><div id="pl" style="margin-top:8px"></div></div>
+  <p class="mut" style="font-size:12px">Visit = one 30-minute session. Page views = loads plus bottom-menu taps. Engaged = 10 seconds or more, or 2 or more views. Location is city level from the network edge; no IP addresses are stored.</p>
+</div>
 <script>
+window.ARK_API="https://noahs-ark-retruns.fastbitcoin12.workers.dev";
 (function(){
-var $=function(s){return document.querySelector(s)},days=7,timer=null,API=window.ARK_API||'';
-function tok(){try{return sessionStorage.getItem('ark_tok')||''}catch(e){return ''}}
-function H(){var t=tok();return t?{Authorization:'Bearer '+t}:{}}
-var esc=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
-function mmss(s){s=Math.round(s||0);return Math.floor(s/60)+':'+('0'+s%60).slice(-2)}
-function pct(a,b){return b?Math.round(a/b*100)+'%':'0%'}
+var API=window.ARK_API||'',$=function(s){return document.querySelector(s)},tok=sessionStorage.getItem('ark_admin')||'';
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function dur(s){s=+s||0;return s<60?s+'s':Math.round(s/60)+'m'}
+function pct(a,b){return b?Math.round(100*a/b)+'%':'0%'}
+function tbl(el,head,rows){el.innerHTML='<tr>'+head.map(function(h,i){return '<th'+(h.n?' class="n"':'')+'>'+esc(h.t)+'</th>'}).join('')+'</tr>'+(rows.length?rows.join(''):'<tr><td colspan="'+head.length+'" class="mut">No data yet.</td></tr>')}
 function show(on){$('#login').hidden=on;$('#app').hidden=!on}
-async function load(){
+function api(path,opt){opt=opt||{};opt.headers=Object.assign({'content-type':'application/json'},tok?{Authorization:'Bearer '+tok}:{}, opt.headers||{});return fetch(API+path,opt)}
+function load(){
   var off=-new Date().getTimezoneOffset()*60;
-  var r=await fetch(API+'/api/admin/stats?days='+days+'&off='+off,{cache:'no-store',headers:H()});
-  if(r.status===401){show(false);return}
-  if(!r.ok){$('#upd').textContent='Could not load stats.';return}
-  var d=await r.json();show(true);
-  if(d.nodb){$('#upd').textContent='Database not connected yet.';$('#k').innerHTML='<div class="card">The stats database is not connected to this site yet. Once the database is attached, visits will start appearing here.</div>';return}
-  var t=d.totals,v=t.visits||0;
-  $('#upd').textContent='Updated '+new Date().toLocaleTimeString([], {hour:'numeric',minute:'2-digit'})+' · refreshes every minute';
-  $('#k').innerHTML=[['Visits',v,(d.live||0)+' live now'],['Page views',t.views||0,''],['Views / visit',v?(t.views/v).toFixed(2):'0.00',''],['Avg visit duration',mmss(v?t.dur/v:0),'min:sec'],['Engagement rate',pct(t.eng,v),(t.eng||0)+' engaged visits'],['New visitors',pct(t.newv,v),(t.newv||0)+' first-timers'],['Mobile',pct(d.mobile||0,v),''],['Top source',(d.plat[0]&&d.plat[0].platform)||'–','']].map(function(x){return '<div class="t"><span>'+x[0]+'</span><b>'+esc(x[1])+'</b><small>'+esc(x[2])+'</small></div>'}).join('');
-  var mx=Math.max.apply(null,d.series.map(function(s){return s.visits}).concat([1]));
-  $('#chart').innerHTML=d.series.length?d.series.map(function(s){var lab=days===1?s.d.slice(11)+':00':s.d.slice(5);return '<div class="col"><u>'+s.views+'</u><i style="height:'+Math.max(4,s.visits/mx*105)+'px" title="'+s.visits+' visits"></i><em>'+esc(lab)+'</em></div>'}).join(''):'<div class="muted">No visits in this range yet.</div>';
-  $('#plat').innerHTML=d.plat.length?'<table><tr><th>Source</th><th class="n">Visits</th><th class="n">Views/visit</th><th class="n">Engaged</th></tr>'+d.plat.map(function(p){return '<tr><td>'+esc(p.platform)+'<div class="bar"><i style="width:'+Math.round(p.visits/d.plat[0].visits*100)+'%"></i></div></td><td class="n">'+p.visits+' <span class="muted">('+pct(p.visits,v)+')</span></td><td class="n">'+(p.visits?(p.views/p.visits).toFixed(1):'0')+'</td><td class="n">'+pct(p.eng,p.visits)+'</td></tr>'}).join('')+'</table>':'<div class="muted">No data yet.</div>';
-  $('#loc').innerHTML=d.loc.length?'<table><tr><th>City</th><th>State</th><th class="n">Visits</th><th class="n">Views</th></tr>'+d.loc.map(function(l){return '<tr><td>'+esc(l.city)+'</td><td>'+esc(l.region||'–')+'</td><td class="n">'+l.visits+'</td><td class="n">'+l.views+'</td></tr>'}).join('')+'</table>':'<div class="muted">No data yet.</div>';
-  $('#chatmod').innerHTML=(d.chat&&d.chat.length)?'<table><tr><th>When</th><th>Name</th><th>Message</th><th></th></tr>'+d.chat.map(function(c){return '<tr'+(c.hidden?' style="opacity:.45"':'')+'><td>'+esc(new Date(c.ts).toLocaleString([], {month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}))+'</td><td>'+esc(c.name)+'</td><td>'+esc(c.msg)+'</td><td>'+(c.hidden?'hidden':'<button class="g" data-hide="'+c.id+'">Hide</button>')+'</td></tr>'}).join('')+'</table>':'<div class="muted">No chat messages yet.</div>';
-  document.querySelectorAll('[data-hide]').forEach(function(b){b.onclick=async function(){await fetch(API+'/api/admin/chat/hide',{method:'POST',headers:Object.assign({'content-type':'application/json'},H()),body:JSON.stringify({id:+b.getAttribute('data-hide')})});load()}});
-  $('#recent').innerHTML=d.recent.length?'<table><tr><th>When</th><th>City</th><th>Source</th><th>Device</th><th class="n">Views</th><th class="n">Time</th><th>Engaged</th></tr>'+d.recent.map(function(r){return '<tr><td>'+esc(new Date(r.first_ts).toLocaleString([], {month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}))+'</td><td>'+esc(r.city+(r.region?', '+r.region:''))+'</td><td>'+esc(r.platform)+'</td><td>'+esc(r.device)+'</td><td class="n">'+r.views+'</td><td class="n">'+mmss(r.dur)+'</td><td>'+(r.engaged?'<span class="pill">Yes</span>':'No')+'</td></tr>'}).join('')+'</table>':'<div class="muted">No visits yet.</div>';
+  api('/api/admin/stats?days='+$('#days').value+'&off='+off).then(function(r){if(r.status===401){tok='';sessionStorage.removeItem('ark_admin');show(false);return null}return r.json()}).then(function(d){
+    if(!d)return;show(true);
+    if(d.nodb){$('#kpis').innerHTML='<div class="card">The database is not connected yet.</div>';return}
+    var t=d.totals||{};
+    $('#kpis').innerHTML=[['Visits',t.visits||0],['Page views',t.views||0],['Live now',d.live||0],['Engaged',pct(t.eng||0,t.visits||0)],['Avg time on site',dur(t.visits?Math.round((t.dur||0)/t.visits):0)],['New visitors',pct(t.newv||0,t.visits||0)],['On mobile',pct(d.mobile||0,t.visits||0)]].map(function(k){return '<div class="kpi"><b>'+esc(k[1])+'</b><span>'+esc(k[0])+'</span></div>'}).join('');
+    var s=d.series||[],mx=Math.max.apply(null,s.map(function(x){return x.visits}).concat([1]));
+    $('#spark').innerHTML=s.map(function(x){return '<div title="'+esc(x.d)+': '+x.visits+' visits" style="height:'+Math.max(2,Math.round(100*x.visits/mx))+'%"></div>'}).join('');
+    $('#sparkL').textContent=s.length?s[0].d+'  to  '+s[s.length-1].d:'';
+    var pm=Math.max.apply(null,(d.plat||[]).map(function(x){return x.visits}).concat([1]));
+    tbl($('#plat'),[{t:'Platform'},{t:'Visits',n:1},{t:'Views',n:1},{t:'Engaged',n:1},{t:''}],(d.plat||[]).map(function(x){return '<tr><td>'+esc(x.platform)+'</td><td class="n">'+x.visits+'</td><td class="n">'+(x.views||0)+'</td><td class="n">'+pct(x.eng||0,x.visits)+'</td><td style="width:30%"><div class="bar" style="width:'+Math.round(100*x.visits/pm)+'%"></div></td></tr>'}));
+    tbl($('#loc'),[{t:'City'},{t:'State'},{t:'Visits',n:1},{t:'Views',n:1}],(d.loc||[]).map(function(x){return '<tr><td>'+esc(x.city||'Unknown')+'</td><td>'+esc(x.region||'')+'</td><td class="n">'+x.visits+'</td><td class="n">'+(x.views||0)+'</td></tr>'}));
+    tbl($('#recent'),[{t:'When'},{t:'City'},{t:'Platform'},{t:'Device'},{t:'Views',n:1},{t:'Time',n:1},{t:'Engaged'}],(d.recent||[]).map(function(x){return '<tr><td>'+esc(new Date(x.first_ts).toLocaleString([], {month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}))+'</td><td>'+esc((x.city||'Unknown')+(x.region?', '+x.region:''))+'</td><td>'+esc(x.platform)+'</td><td>'+esc(x.device||'')+'</td><td class="n">'+(x.views||0)+'</td><td class="n">'+dur(x.dur)+'</td><td>'+(x.engaged?'Yes':'No')+'</td></tr>'}));
+    tbl($('#chat'),[{t:'When'},{t:'Name'},{t:'Message'},{t:'Reports',n:1},{t:''}],(d.chat||[]).map(function(c){return '<tr class="'+(c.hidden?'hid':'')+'"><td>'+esc(new Date(c.ts).toLocaleString([], {month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}))+'</td><td>'+esc(c.name)+'</td><td>'+esc(c.msg)+'</td><td class="n">'+(c.reports||0)+'</td><td>'+(c.hidden?'<span class="mut">hidden</span>':'<div class="row"><button class="s" data-hide="'+c.id+'" type="button">Hide</button><button class="s" data-pin="'+c.id+'" type="button">Pin</button>'+(c.banned?'<span class="err">banned</span>':'<button class="s" data-ban="'+c.id+'" type="button">Ban</button>')+'</div>')+'</td></tr>'}));
+    $('#pins').innerHTML=(d.pins||[]).length?d.pins.map(function(x){return '<div class="row" style="padding:6px 0;border-bottom:1px solid var(--line)"><span style="flex:1">📌 <b>'+esc(x.name)+'</b>: '+esc(x.msg)+'</span><button class="s" type="button" data-unpin="'+x.id+'">Unpin</button></div>'}).join(''):'<span class="mut">Nothing pinned.</span>';
+    $('#bans').innerHTML=(d.bans||[]).length?d.bans.map(function(x){return '<div class="row" style="padding:6px 0;border-bottom:1px solid var(--line)"><span style="flex:1"><b>'+esc(x.name||'(unknown)')+'</b> <span class="mut">'+esc(String(x.cid).slice(0,6))+'… · '+esc(new Date(x.ts).toLocaleDateString())+'</span></span><button class="s" type="button" data-unban="'+esc(x.cid)+'">Unban</button></div>'}).join(''):'<span class="mut">Nobody is banned.</span>';
+    loadCom();
+    $('#upd').textContent='Updated '+new Date().toLocaleTimeString([], {hour:'numeric',minute:'2-digit'});
+  }).catch(function(){$('#kpis').innerHTML='<div class="card err">Could not reach the server.</div>';show(true)});
 }
-function start(){load();clearInterval(timer);timer=setInterval(load,60000)}
-$('#f').onsubmit=async function(e){e.preventDefault();$('#e').textContent='';
-  var r=await fetch(API+'/api/admin/login',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({password:$('#pw').value})});
-  if(r.ok){var j=await r.json();try{sessionStorage.setItem('ark_tok',j.token||'')}catch(e){}$('#pw').value='';start()}else if(r.status===429)$('#e').textContent='Too many tries. Wait 10 minutes.';else $('#e').textContent='Wrong password.'};
-document.querySelectorAll('[data-d]').forEach(function(b){b.onclick=function(){days=+b.getAttribute('data-d');document.querySelectorAll('[data-d]').forEach(function(x){x.classList.toggle('sel',x===b)});load()}});
-$('#out').onclick=function(){try{sessionStorage.removeItem('ark_tok')}catch(e){}clearInterval(timer);show(false)};
-fetch(API+'/api/admin/stats?days=1',{cache:'no-store',headers:H()}).then(function(r){if(r.ok)start();else show(false)}).catch(function(){show(false)});
+$('#lf').onsubmit=function(e){e.preventDefault();$('#lerr').textContent='';
+  api('/api/admin/login',{method:'POST',body:JSON.stringify({password:$('#pw').value})}).then(function(r){return r.json().then(function(j){return {s:r.status,j:j}})}).then(function(x){
+    if(x.j&&x.j.token){tok=x.j.token;sessionStorage.setItem('ark_admin',tok);$('#pw').value='';load()}
+    else $('#lerr').textContent=x.s===429?'Too many tries. Wait 10 minutes.':x.s===503?'Admin is not set up yet.':'Wrong password.'
+  }).catch(function(){$('#lerr').textContent='Could not reach the server.'})};
+function loadCom(){
+  api('/api/admin/reports').then(function(r){return r.json()}).then(function(d){
+    var l=d.pending||[];$('#pend').innerHTML=l.length?l.map(function(x){return '<div style="padding:10px 0;border-bottom:1px solid var(--line)"><b>'+esc(x.cat)+' · '+esc(x.city)+', '+esc(x.st)+'</b> <span class="mut">by '+esc(x.name)+' · '+esc(new Date(x.ts).toLocaleString())+'</span><div>'+esc(x.txt)+'</div>'
+      +(x.img&&/^data:image\/jpeg;base64,[A-Za-z0-9+\/=]+$/.test(x.img)?'<img alt="Submitted photo" src="'+x.img+'" style="max-width:100%;max-height:260px;border-radius:10px;margin-top:6px;display:block">':'')
+      +(x.vid?'<div class="mut">Video link: '+esc(x.vid)+'</div>':'')
+      +'<div class="row" style="margin-top:8px"><button type="button" data-ap="'+x.id+'">Approve</button><button class="s" type="button" data-rj="'+x.id+'">Reject</button></div></div>'}).join(''):'<span class="mut">Nothing waiting. New reports show up here for approval.</span>'}).catch(function(){});
+  fetch(API+'/api/community').then(function(r){return r.json()}).then(function(d){
+    var ps=d.polls||[];$('#pl').innerHTML=ps.length?ps.map(function(p){var done=p.truth!==null,total=p.counts.reduce(function(a,b){return a+b},0);
+      return '<div style="padding:8px 0;border-bottom:1px solid var(--line)"><b>'+esc(p.q)+'</b> <span class="mut">'+total+' votes · '+(done?'resolved':Date.now()<p.closes?'open':'closed')+'</span><div class="row" style="margin-top:6px">'+p.opts.map(function(o,i){return done?'<span class="mut">'+(p.truth===i?'✓ ':'')+esc(o)+' ('+p.counts[i]+')</span>':'<button class="s" type="button" data-rs="'+p.id+'" data-t="'+i+'">Correct: '+esc(o)+' ('+p.counts[i]+')</button>'}).join('')+'</div></div>'}).join(''):'<span class="mut">No polls yet.</span>'}).catch(function(){})
+}
+$('#pend').addEventListener('click',function(e){var a=e.target.closest('[data-ap]'),r=e.target.closest('[data-rj]');if(!a&&!r)return;
+  api('/api/admin/report/decide',{method:'POST',body:JSON.stringify({id:+(a||r).getAttribute(a?'data-ap':'data-rj'),ok:!!a})}).then(loadCom)});
+$('#pl').addEventListener('click',function(e){var b=e.target.closest('[data-rs]');if(!b)return;if(!confirm('Mark this answer as correct and close the poll?'))return;
+  api('/api/admin/poll/resolve',{method:'POST',body:JSON.stringify({id:+b.getAttribute('data-rs'),truth:+b.getAttribute('data-t')})}).then(loadCom)});
+$('#pf').onsubmit=function(e){e.preventDefault();var o=$('#po').value.split('|').map(function(s){return s.trim()}).filter(Boolean);
+  if($('#pq').value.trim().length<8||o.length<2||o.length>4){$('#pmsg').textContent='Write a question and 2 to 4 options separated by |';return}
+  api('/api/admin/poll/create',{method:'POST',body:JSON.stringify({q:$('#pq').value.trim(),opts:o,hours:+$('#ph').value})}).then(function(r){return r.json()}).then(function(j){$('#pmsg').textContent=j.ok?'Poll created. It is live on the page now.':'Could not create the poll.';if(j.ok){$('#pq').value='';$('#po').value=''}loadCom()})};
+$('#chat').addEventListener('click',function(e){
+  var pn=e.target.closest('[data-pin]'),bn=e.target.closest('[data-ban]');
+  if(pn)api('/api/admin/pin',{method:'POST',body:JSON.stringify({id:+pn.getAttribute('data-pin')})}).then(load);
+  if(bn&&confirm('Ban this chatter? Their messages will be hidden and they will be blocked from chat, check-ins, reports, votes and the game.'))api('/api/admin/ban',{method:'POST',body:JSON.stringify({id:+bn.getAttribute('data-ban')})}).then(load)});
+$('#pins').addEventListener('click',function(e){var b=e.target.closest('[data-unpin]');if(b)api('/api/admin/unpin',{method:'POST',body:JSON.stringify({id:+b.getAttribute('data-unpin')})}).then(load)});
+$('#bans').addEventListener('click',function(e){var b=e.target.closest('[data-unban]');if(b&&confirm('Allow this chatter back?'))api('/api/admin/unban',{method:'POST',body:JSON.stringify({cid:b.getAttribute('data-unban')})}).then(load)});
+$('#pinF').onsubmit=function(e){e.preventDefault();var t=$('#pinT').value.trim();if(t.length<2)return;api('/api/admin/pin',{method:'POST',body:JSON.stringify({text:t})}).then(function(){$('#pinT').value='';load()})};
+$('#days').onchange=load;$('#rf').onclick=load;
+$('#out').onclick=function(){tok='';sessionStorage.removeItem('ark_admin');show(false)};
+$('#chat').addEventListener('click',function(e){var b=e.target.closest('[data-hide]');if(!b)return;api('/api/admin/chat/hide',{method:'POST',body:JSON.stringify({id:+b.getAttribute('data-hide')})}).then(load)});
+if(tok)load();setInterval(function(){if(tok&&!document.hidden)load()},60000);
 })();
 </script></body></html>
