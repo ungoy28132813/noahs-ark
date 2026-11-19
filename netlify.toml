@@ -1,7 +1,3 @@
-# Netlify: static front-end only. Backend features (news gossip, stats, chat, admin) call the Cloudflare Worker.
-# Before deploying, set window.ARK_API in site/index.html AND site/admin.html to your Worker URL, e.g.
-#   window.ARK_API="https://noahs-ark-retruns.<your-subdomain>.workers.dev";
-# and add your Netlify URL to ALLOWED_ORIGINS in worker/wrangler.toml, then redeploy the Worker.
 [build]
   publish = "site"
 
@@ -11,7 +7,6 @@
   status = 200
 
 [[headers]]
-  for = "/*"
+  for = "/sw.js"
   [headers.values]
-    X-Content-Type-Options = "nosniff"
-    Referrer-Policy = "strict-origin-when-cross-origin"
+    Cache-Control = "no-cache"
