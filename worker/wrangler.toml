@@ -20,7 +20,7 @@ crons = ["*/5 * * * *"]
 
 [vars]
 # Sites allowed to call this API (comma separated).
-ALLOWED_ORIGINS = "https://noahs-ark-retruns.netlify.app"
+ALLOWED_ORIGINS = "https://noahs-ark-retruns.netlify.app,https://noahs-ark-returns.netlify.app"
 DASH_URL = "https://noahs-ark-retruns.netlify.app"
 
 # Secrets (never put these in a file or in GitHub). Set each with: npx wrangler secret put NAME
